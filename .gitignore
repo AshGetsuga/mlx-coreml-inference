@@ -1,0 +1,24 @@
+# macOS / Python
+.DS_Store
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Datasets (downloaded or third-party; not redistributed)
+shakespeare.txt
+UNet/cifar10_data/
+Language_Modelling/LSTMvsTransformer/archive/
+
+# Model artifacts (rebuilt by scripts)
+*.pt
+*.mlpackage/
+Language_Modelling/Benchmark/*.npy
+
+# Private notes / drafts (Bug_That_Breaks + Article_Bug return after the W2 root-cause fix)
+CLAUDE.md
+Topics.rtf
+Topics.txt
+Benchmark.rtf
+Article_Bug.txt
+Bug_That_Breaks.md
+Graident_Flow.png
