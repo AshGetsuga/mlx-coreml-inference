@@ -1,36 +1,15 @@
+"""PyTorch mirror of train/model_mlx.py, used for JIT tracing → CoreML. Parameter names match the MLX model."""
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
-import urllib
 
-# ── Hyperparameters ───────────────────────────────────────────────────────────
-CONTEXT_LEN = 256
-D_MODEL     = 128
-N_HEADS     = 4
-N_LAYERS    = 4
-D_FF        = 512
+import numpy as np
 
-DATA_URL  = "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
-DATA_PATH = "../shakespeare.txt"
+import config
+from config import CONTEXT_LEN, D_MODEL, N_HEADS, N_LAYERS, D_FF
+from tokenizer import CharTokenizer
 
-try:
-    open(DATA_PATH)
-except FileNotFoundError:
-    print("Downloading Shakespeare dataset...")
-    urllib.request.urlretrieve(DATA_URL, DATA_PATH)
-
-with open(DATA_PATH) as f:
-    text = f.read()
-
-chars      = sorted(set(text))
-VOCAB_SIZE = len(chars)
-stoi       = {c: i for i, c in enumerate(chars)}
-itos       = {i: c for c, i in stoi.items()}
-encode     = lambda s: [stoi[c] for c in s]
-decode     = lambda ids: "".join(itos[i] for i in ids)
-
-print(f"Vocab size : {VOCAB_SIZE}")
-print(f"Dataset    : {len(text):,} characters")
+VOCAB_SIZE = CharTokenizer().vocab_size
 
 # Attention -- Multi-Head
 
@@ -149,3 +128,12 @@ class GPT(nn.Module):
         return self.head(self.ln_f(x))
 
         
+
+def load_mlx_weights(model: GPT, npz_path=config.WEIGHTS_PATH) -> None:
+    """Load MLX .npz weights by name. MLX Linear stores (out, in), same as PyTorch, so no transposes."""
+    arrays = np.load(npz_path, allow_pickle=True)
+    sd     = model.state_dict()
+    missing = [k for k in sd if k not in arrays]
+    if missing:
+        raise KeyError(f"Weights missing from {npz_path}: {missing}")
+    model.load_state_dict({k: torch.from_numpy(np.array(arrays[k])) for k in sd})

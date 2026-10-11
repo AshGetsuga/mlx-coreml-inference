@@ -1,0 +1,5 @@
+# Tested with Python 3.12.13 on Apple M4 Pro, macOS 26
+mlx==0.31.1
+torch==2.11.0        # coremltools 9.0 officially tests up to torch 2.7; this combination exports and passes parity
+coremltools==9.0
+numpy==2.4.4

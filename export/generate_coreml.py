@@ -1,23 +1,18 @@
+"""Sample text from the exported CoreML model (top-k). Run: python -m export.generate_coreml"""
 import numpy as np
 import coremltools as ct
 
-# ── Config ────────────────────────────────────────────────────────────────────
-MODEL_PATH     = "gpt_shakespeare.mlpackage"
-DATA_PATH      = "../shakespeare.txt"
-CONTEXT_LEN    = 256
+import config
+from tokenizer import CharTokenizer
+
+MODEL_PATH     = str(config.MLPACKAGE_PATH)
+CONTEXT_LEN    = config.CONTEXT_LEN
 MAX_NEW_TOKENS = 300
 
-# ── Rebuild tokenizer ─────────────────────────────────────────────────────────
 # The .mlpackage stores weights + compute graph only — not the tokenizer.
-# We rebuild the same char-level lookup tables that train.py used.
-with open(DATA_PATH) as f:
-    text = f.read()
-
-chars  = sorted(set(text))
-stoi   = {c: i for i, c in enumerate(chars)}
-itos   = {i: c for c, i in stoi.items()}
-encode = lambda s: [stoi[c] for c in s]
-decode = lambda ids: "".join(itos[i] for i in ids)
+tok    = CharTokenizer()
+encode = tok.encode
+decode = tok.decode
 
 # ── Load CoreML model ─────────────────────────────────────────────────────────
 # MLModel is a Python handle to the compiled hardware graph.

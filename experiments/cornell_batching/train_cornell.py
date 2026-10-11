@@ -31,7 +31,7 @@ EVAL_EVERY   = 300
 EVAL_ITERS   = 50       # val batches to average for each evaluation
 LR           = 3e-4
 VAL_FRACTION = 0.15
-DATA_ROOT    = os.path.join(os.path.dirname(__file__), "../LSTMvsTransformer/archive")
+DATA_ROOT    = os.path.join(os.path.dirname(__file__), "data")
 DEVICE       = "mps" if torch.backends.mps.is_available() else "cpu"
 
 enc        = tiktoken.get_encoding("r50k_base")
