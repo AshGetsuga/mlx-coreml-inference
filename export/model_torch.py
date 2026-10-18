@@ -41,6 +41,8 @@ class MultiHeadAttention(nn.Module):
         attention_weights = (Q @ K.transpose(-2, -1)) / (self.d_head ** 0.5)
 
         # Step 2: Causal mask + softmax
+        # Finite fill on purpose: CoreML builds this mask on device in fp16 and lowers triu to x - band_part(x),
+        # so -inf (or anything past fp16's ±65504) gives -inf - (-inf) = NaN. See experiments/mask_nan.
         mask = torch.triu(torch.full((N, N), -1e4), diagonal=1).to(x.device)
         attention_weights = torch.softmax(attention_weights + mask, dim=-1)
 

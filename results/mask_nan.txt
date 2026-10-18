@@ -1,0 +1,27 @@
+Causal mask 128x128. Correct result: NaN = 0, masked cells = 8128
+
+== FIXED length    (N = 128 constant)
+   ops run on device: cast -> add -> cast
+     fill | precision |   NaN |  -inf | result
+     -inf | fp16      |     0 |  8128 | ok
+     -inf | fp32      |     0 |     0 | ok
+   -1e+14 | fp16      |     0 |     0 | ok
+   -1e+14 | fp32      |     0 |     0 | ok
+   -1e+09 | fp16      |     0 |     0 | ok
+   -1e+09 | fp32      |     0 |     0 | ok
+   -1e+04 | fp16      |     0 |     0 | ok
+   -1e+04 | fp32      |     0 |     0 | ok
+
+== FLEXIBLE length (N = x.shape[1], RangeDim) <- the real GPT
+   ops run on device: shape -> gather -> concat -> fill -> band_part -> sub -> cast -> add -> cast
+     fill | precision |   NaN |  -inf | result
+     -inf | fp16      |  8256 |  8128 | BROKEN
+     -inf | fp32      |     0 |     0 | ok
+   -1e+14 | fp16      |  8256 |  8128 | BROKEN
+   -1e+14 | fp32      |     0 |     0 | ok
+   -1e+09 | fp16      |  8256 |  8128 | BROKEN
+   -1e+09 | fp32      |     0 |     0 | ok
+   -1e+04 | fp16      |     0 |     0 | ok
+   -1e+04 | fp32      |     0 |     0 | ok
+
+fp32, fill=-inf: masked cells hold -3.4e+38 (not -inf), so the subtraction gives 0, not NaN

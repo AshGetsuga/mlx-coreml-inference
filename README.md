@@ -24,7 +24,7 @@ Train a small GPT in **MLX**, carry the weights through **PyTorch** into **CoreM
 
 ## Hardware notes: what actually mattered
 
-- **The causal mask's fill value matters for export.** A `float('-inf')` mask works in PyTorch but produced NaN logits after CoreML conversion; a finite `-1e4` fixes it. Root cause analysis is in progress; a write-up will follow.
+- **A `-inf` causal mask turns into NaN on device.** With a flexible sequence length, CoreML builds the mask at runtime in fp16 and implements `triu` as `x − band_part(x)`, so every kept cell becomes `-inf − (-inf) = NaN`. `-1e9`/`-1e14` fail the same way (they round to `-inf` in fp16); a finite `-1e4` fixes it. A fixed shape or fp32 hides the bug. Full write-up and repro: [`experiments/mask_nan`](experiments/mask_nan/README.md).
 - **Timers lie on Apple Silicon unless you synchronize.** MLX is lazy (`mx.eval()` forces compute) and PyTorch MPS is async (`torch.mps.synchronize()`); without them you time the dispatch, not the work.
 - **Fused kernels decide the winner, not the framework.** See [`experiments/mlx_vs_pytorch`](experiments/mlx_vs_pytorch/log.md): PyTorch won with a fused interpolate kernel, MLX won once both used `ConvTranspose2d`.
 - **MLX and PyTorch share weight layout for `Linear`** (`(out, in)`), so MLX `.npz` weights load into PyTorch by name with no transposes.
@@ -53,12 +53,13 @@ parity/                   PyTorch vs CoreML greedy-decode comparison
 bench/                    latency benchmarks
 weights/, results/        trained weights, training log
 experiments/              side experiments: MLX vs PyTorch kernels, KV cache (WIP),
-                          UNet in MLX, batching study, speculative-decoding design notes
+                          UNet in MLX, batching study, speculative-decoding design notes,
+                          mask_nan/ (CoreML -inf mask NaN root cause + repro)
 ```
 
 ## Roadmap
 
-- [ ] Root-cause the `-inf` mask NaN and publish the write-up
+- [x] Root-cause the `-inf` mask NaN ([write-up](experiments/mask_nan/README.md))
 - [ ] Precision-matched (fp32 vs fp16) latency matrix across PyTorch CPU/MPS and every CoreML compute unit
 - [ ] Verify per-op device placement with `MLComputePlan`
 - [ ] Scale up: a real small LLM (Qwen2.5-0.5B) on MLX and CoreML with stateful KV cache and int8/int4 quantization: tokens/sec, memory, perplexity
