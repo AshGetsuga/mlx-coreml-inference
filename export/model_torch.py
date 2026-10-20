@@ -41,7 +41,6 @@ class MultiHeadAttention(nn.Module):
         attention_weights = (Q @ K.transpose(-2, -1)) / (self.d_head ** 0.5)
 
         # Step 2: Causal mask + softmax 
-        mask.to(x.device)
         attention_weights = torch.softmax(attention_weights + mask, dim=-1)
 
         # Step 3: Weighted values → [B, H, N, d_head]
@@ -123,7 +122,7 @@ class GPT(nn.Module):
         positions = torch.arange(T, device=x.device)
         # Creating deterministic masked attention mask
         mask = torch.full((T, T), fill_value=-1e4)
-        mask = torch.triu(mask, diagonal = 1)
+        mask = torch.triu(mask, diagonal = 1).to(x.device)
 
         x = self.tok_emb(x) + self.pos_emb(positions)
 
