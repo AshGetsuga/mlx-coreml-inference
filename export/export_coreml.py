@@ -1,4 +1,6 @@
-"""MLX weights → PyTorch → torch.jit.trace → CoreML .mlpackage. Run: python -m export.export_coreml"""
+"""MLX weights → PyTorch → torch.jit.trace → CoreML .mlpackage. Run: python -m export.export_coreml [--precision fp16|fp32]"""
+import argparse
+
 import numpy as np
 import torch
 import coremltools as ct
@@ -6,8 +8,10 @@ import coremltools as ct
 import config
 from export.model_torch import GPT, VOCAB_SIZE, load_mlx_weights
 
+PRECISIONS = {"fp16": ct.precision.FLOAT16, "fp32": ct.precision.FLOAT32}
 
-def export():
+
+def export(precision="fp16"):
     model = GPT()
     model.eval()
     load_mlx_weights(model)
@@ -33,14 +37,18 @@ def export():
         outputs=[ct.TensorType(name="logits", dtype=np.float32)],
         minimum_deployment_target=ct.target.macOS13,
         compute_units=ct.ComputeUnit.ALL,   # ANE + GPU + CPU — runtime picks best
+        compute_precision=PRECISIONS[precision],  # internal op precision; I/O dtypes above are unaffected
     )
 
-    config.MLPACKAGE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    mlmodel.save(str(config.MLPACKAGE_PATH))
-    print(f"CoreML model saved to {config.MLPACKAGE_PATH}")
+    out_path = config.MLPACKAGE_PATHS[precision]
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    mlmodel.save(str(out_path))
+    print(f"CoreML model ({precision}) saved to {out_path}")
     print(f"Input  : token_ids  — shape (1, T),              dtype int32")
     print(f"Output : logits     — shape (1, T, {VOCAB_SIZE}), dtype float32")
 
 
 if __name__ == "__main__":
-    export()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--precision", choices=PRECISIONS, default="fp16")
+    export(parser.parse_args().precision)

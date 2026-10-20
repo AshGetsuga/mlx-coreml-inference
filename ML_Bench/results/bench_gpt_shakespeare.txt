@@ -1,0 +1,29 @@
+Machine       : Apple M4 Pro  (macOS 26.6.2, coremltools 9.0)
+Input         : token_ids (1, 256) int32
+Iterations    : 100 timed  (+10 warmup)
+Timestamp     : 2026-10-20T10:18:43
+
+fp16  —  gpt_shakespeare  (latency in ms)
+═════════════════════════════════════════
+units        mean   std   min   p50   p90   p99   max  load  time / CPU           
+───────────  ────  ────  ────  ────  ────  ────  ────  ────  ──────────  ─────────
+ALL          0.96  0.38  0.73  0.79  1.41  2.11  2.13   228       1.38x           
+CPU_ONLY     0.70  0.02  0.69  0.70  0.71  0.82  0.83    86       1.00x  ← fastest
+CPU_AND_GPU  0.95  0.41  0.70  0.77  1.76  2.11  2.12    89       1.36x           
+CPU_AND_NE   0.89  0.05  0.83  0.88  0.93  1.01  1.24   471       1.28x           
+
+fp32  —  gpt_shakespeare_fp32  (latency in ms)
+══════════════════════════════════════════════
+units        mean   std   min   p50   p90   p99   max  load  time / CPU           
+───────────  ────  ────  ────  ────  ────  ────  ────  ────  ──────────  ─────────
+ALL          0.87  0.09  0.73  0.90  0.98  1.01  1.02   133       0.73x  ← fastest
+CPU_ONLY     1.20  0.01  1.19  1.20  1.21  1.25  1.25    81       1.00x           
+CPU_AND_GPU  0.88  0.10  0.73  0.91  1.00  1.07  1.13    91       0.74x           
+
+fp16 vs fp32  (mean ms, same compute units)
+═══════════════════════════════════════════
+units        fp16  fp32  fp32 / fp16
+───────────  ────  ────  ───────────
+ALL          0.96  0.87        0.91x
+CPU_ONLY     0.70  1.20        1.71x
+CPU_AND_GPU  0.95  0.88        0.93x

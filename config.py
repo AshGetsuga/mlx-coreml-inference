@@ -23,6 +23,8 @@ DATA_URL       = "https://raw.githubusercontent.com/karpathy/char-rnn/master/dat
 DATA_PATH      = ROOT / "data" / "shakespeare.txt"
 WEIGHTS_PATH   = ROOT / "weights" / "gpt_shakespeare.npz"
 MLPACKAGE_PATH = ROOT / "artifacts" / "gpt_shakespeare.mlpackage"
+MLPACKAGE_FP32_PATH = ROOT / "artifacts" / "gpt_shakespeare_fp32.mlpackage"
+MLPACKAGE_PATHS = {"fp16": MLPACKAGE_PATH, "fp32": MLPACKAGE_FP32_PATH}  # keyed by compute precision
 PARITY_DIR     = ROOT / "artifacts" / "parity"
 
 # ── Parity check ──────────────────────────────────────────────────────────────

@@ -1,0 +1,169 @@
+Model         : gpt_shakespeare_fp32
+Compute units : CPU_AND_GPU
+Ops           : 128 compute  (+166 const, hidden)
+Total cost    : 1.0000  (relative units; percentages below are of this total)
+
+Operations
+══════════
+  #  op          output                        device  supported       cost
+───  ──────────  ────────────────────────────  ──────  ───────────  ───────
+  0  shape       var_15_shape                  GPU     CPU GPU ···    0.00%
+  1  gather      gather_0                      GPU     CPU GPU ···    0.00%
+  2  range_1d    input_1                       GPU     CPU GPU ···    0.00%
+  3  gather      var_26                        GPU     CPU GPU ···    0.07%
+  4  gather      var_30                        GPU     CPU GPU ···    0.27%
+  5  add         x_3                           GPU     CPU GPU ···    0.24%
+  6  layer_norm  x_5                           GPU     CPU GPU ···    0.37%
+  7  shape       var_60_shape                  GPU     CPU GPU ···    0.18%
+  8  gather      gather_2                      GPU     CPU GPU ···    0.00%
+  9  linear      Q_1                           GPU     CPU GPU ···    0.24%
+ 10  linear      K_1                           GPU     CPU GPU ···    0.24%
+ 11  linear      V_1                           GPU     CPU GPU ···    0.24%
+ 12  reshape     var_70                        GPU     CPU GPU ···    0.37%
+ 13  reshape     var_73                        GPU     CPU GPU ···    0.37%
+ 14  reshape     var_76                        GPU     CPU GPU ···    0.37%
+ 15  transpose   transpose_13                  GPU     CPU GPU ···    1.60%
+ 16  transpose   transpose_12                  GPU     CPU GPU ···    1.60%
+ 17  matmul      var_79                        GPU     CPU GPU ···    1.84%
+ 18  mul         _inversed_attention_weights…  GPU     CPU GPU ···    0.54%
+ 19  concat      concat_3                      GPU     CPU GPU ···    0.00%
+ 20  fill        var_83                        GPU     CPU GPU ···    0.37%
+ 21  band_part   band_part_0                   GPU     CPU GPU ···    0.73%
+ 22  sub         sub_0                         GPU     CPU GPU ···    0.49%
+ 23  add         var_86                        GPU     CPU GPU ···    1.22%
+ 24  softmax     attention_weights_3           GPU     CPU GPU ···    2.94%
+ 25  transpose   V_3                           GPU     CPU GPU ···    1.60%
+ 26  matmul      attention_output_1            GPU     CPU GPU ···    1.84%
+ 27  transpose   var_89                        GPU     CPU GPU ···    1.60%
+ 28  reshape     input_3                       GPU     CPU GPU ···    0.37%
+ 29  linear      var_93                        GPU     CPU GPU ···    0.24%
+ 30  add         input_5                       GPU     CPU GPU ···    0.24%
+ 31  layer_norm  input_7                       GPU     CPU GPU ···    0.37%
+ 32  linear      input_9                       GPU     CPU GPU ···    0.24%
+ 33  relu        input_11                      GPU     CPU GPU ···    0.54%
+ 34  linear      var_107                       GPU     CPU GPU ···    3.79%
+ 35  add         x_7                           GPU     CPU GPU ···    0.24%
+ 36  layer_norm  x_9                           GPU     CPU GPU ···    0.37%
+ 37  shape       var_136_shape                 GPU     CPU GPU ···    0.18%
+ 38  gather      gather_5                      GPU     CPU GPU ···    0.00%
+ 39  linear      Q_5                           GPU     CPU GPU ···    0.24%
+ 40  linear      K_5                           GPU     CPU GPU ···    0.24%
+ 41  linear      V_5                           GPU     CPU GPU ···    0.24%
+ 42  reshape     var_146                       GPU     CPU GPU ···    0.37%
+ 43  reshape     var_149                       GPU     CPU GPU ···    0.37%
+ 44  reshape     var_152                       GPU     CPU GPU ···    0.37%
+ 45  transpose   transpose_15                  GPU     CPU GPU ···    1.60%
+ 46  transpose   transpose_14                  GPU     CPU GPU ···    1.60%
+ 47  matmul      var_155                       GPU     CPU GPU ···    1.84%
+ 48  mul         _inversed_attention_weights…  GPU     CPU GPU ···    0.54%
+ 49  concat      concat_8                      GPU     CPU GPU ···    0.00%
+ 50  fill        var_159                       GPU     CPU GPU ···    0.37%
+ 51  band_part   band_part_1                   GPU     CPU GPU ···    0.73%
+ 52  sub         sub_1                         GPU     CPU GPU ···    0.49%
+ 53  add         var_162                       GPU     CPU GPU ···    1.22%
+ 54  softmax     attention_weights_7           GPU     CPU GPU ···    2.94%
+ 55  transpose   V_7                           GPU     CPU GPU ···    1.60%
+ 56  matmul      attention_output_3            GPU     CPU GPU ···    1.84%
+ 57  transpose   var_165                       GPU     CPU GPU ···    1.60%
+ 58  reshape     input_13                      GPU     CPU GPU ···    0.37%
+ 59  linear      var_169                       GPU     CPU GPU ···    0.24%
+ 60  add         input_15                      GPU     CPU GPU ···    0.24%
+ 61  layer_norm  input_17                      GPU     CPU GPU ···    0.37%
+ 62  linear      input_19                      GPU     CPU GPU ···    0.24%
+ 63  relu        input_21                      GPU     CPU GPU ···    0.54%
+ 64  linear      var_183                       GPU     CPU GPU ···    3.79%
+ 65  add         x_11                          GPU     CPU GPU ···    0.24%
+ 66  layer_norm  x_13                          GPU     CPU GPU ···    0.37%
+ 67  shape       var_212_shape                 GPU     CPU GPU ···    0.18%
+ 68  gather      gather_8                      GPU     CPU GPU ···    0.00%
+ 69  linear      Q_9                           GPU     CPU GPU ···    0.24%
+ 70  linear      K_9                           GPU     CPU GPU ···    0.24%
+ 71  linear      V_9                           GPU     CPU GPU ···    0.24%
+ 72  reshape     var_222                       GPU     CPU GPU ···    0.37%
+ 73  reshape     var_225                       GPU     CPU GPU ···    0.37%
+ 74  reshape     var_228                       GPU     CPU GPU ···    0.37%
+ 75  transpose   transpose_17                  GPU     CPU GPU ···    1.60%
+ 76  transpose   transpose_16                  GPU     CPU GPU ···    1.60%
+ 77  matmul      var_231                       GPU     CPU GPU ···    1.84%
+ 78  mul         _inversed_attention_weights…  GPU     CPU GPU ···    0.54%
+ 79  concat      concat_13                     GPU     CPU GPU ···    0.00%
+ 80  fill        var_235                       GPU     CPU GPU ···    0.37%
+ 81  band_part   band_part_2                   GPU     CPU GPU ···    0.73%
+ 82  sub         sub_2                         GPU     CPU GPU ···    0.49%
+ 83  add         var_238                       GPU     CPU GPU ···    1.22%
+ 84  softmax     attention_weights_11          GPU     CPU GPU ···    2.94%
+ 85  transpose   V_11                          GPU     CPU GPU ···    1.60%
+ 86  matmul      attention_output_5            GPU     CPU GPU ···    1.84%
+ 87  transpose   var_241                       GPU     CPU GPU ···    1.60%
+ 88  reshape     input_23                      GPU     CPU GPU ···    0.37%
+ 89  linear      var_245                       GPU     CPU GPU ···    0.24%
+ 90  add         input_25                      GPU     CPU GPU ···    0.24%
+ 91  layer_norm  input_27                      GPU     CPU GPU ···    0.37%
+ 92  linear      input_29                      GPU     CPU GPU ···    0.24%
+ 93  relu        input_31                      GPU     CPU GPU ···    0.54%
+ 94  linear      var_259                       GPU     CPU GPU ···    3.79%
+ 95  add         x_15                          GPU     CPU GPU ···    0.24%
+ 96  layer_norm  x                             GPU     CPU GPU ···    0.37%
+ 97  shape       var_288_shape                 GPU     CPU GPU ···    0.18%
+ 98  gather      gather_11                     GPU     CPU GPU ···    0.00%
+ 99  linear      Q_13                          GPU     CPU GPU ···    0.24%
+100  linear      K_13                          GPU     CPU GPU ···    0.24%
+101  linear      V_13                          GPU     CPU GPU ···    0.24%
+102  reshape     var_298                       GPU     CPU GPU ···    0.37%
+103  reshape     var_301                       GPU     CPU GPU ···    0.37%
+104  reshape     var_304                       GPU     CPU GPU ···    0.37%
+105  transpose   transpose_19                  GPU     CPU GPU ···    1.60%
+106  transpose   transpose_18                  GPU     CPU GPU ···    1.60%
+107  matmul      var_307                       GPU     CPU GPU ···    1.84%
+108  mul         _inversed_attention_weights…  GPU     CPU GPU ···    0.54%
+109  concat      concat_18                     GPU     CPU GPU ···    0.00%
+110  fill        var_311                       GPU     CPU GPU ···    0.37%
+111  band_part   band_part_3                   GPU     CPU GPU ···    0.73%
+112  sub         sub_3                         GPU     CPU GPU ···    0.49%
+113  add         var_314                       GPU     CPU GPU ···    1.22%
+114  softmax     attention_weights             GPU     CPU GPU ···    2.94%
+115  transpose   V                             GPU     CPU GPU ···    1.60%
+116  matmul      attention_output              GPU     CPU GPU ···    1.84%
+117  transpose   var_317                       GPU     CPU GPU ···    1.60%
+118  reshape     input_33                      GPU     CPU GPU ···    0.37%
+119  linear      var_321                       GPU     CPU GPU ···    0.24%
+120  add         input_35                      GPU     CPU GPU ···    0.24%
+121  layer_norm  input_37                      GPU     CPU GPU ···    0.37%
+122  linear      input_39                      GPU     CPU GPU ···    0.24%
+123  relu        input_41                      GPU     CPU GPU ···    0.54%
+124  linear      var_335                       GPU     CPU GPU ···    3.79%
+125  add         input_43                      GPU     CPU GPU ···    0.24%
+126  layer_norm  input                         GPU     CPU GPU ···    0.37%
+127  linear      logits                        GPU     CPU GPU ···    0.04%
+
+By device
+═════════
+device  ops  cost share
+──────  ───  ──────────
+GPU     128     100.00%
+
+By op type
+══════════
+op          count  cost share  ran on  supported  
+──────────  ─────  ──────────  ──────  ───────────
+transpose      16      25.64%  GPU     CPU GPU ···
+linear         25      19.94%  GPU     CPU GPU ···
+matmul          8      14.69%  GPU     CPU GPU ···
+softmax         4      11.75%  GPU     CPU GPU ···
+add            13       7.06%  GPU     CPU GPU ···
+reshape        16       5.88%  GPU     CPU GPU ···
+layer_norm      9       3.31%  GPU     CPU GPU ···
+band_part       4       2.94%  GPU     CPU GPU ···
+mul             4       2.15%  GPU     CPU GPU ···
+relu            4       2.15%  GPU     CPU GPU ···
+sub             4       1.95%  GPU     CPU GPU ···
+fill            4       1.47%  GPU     CPU GPU ···
+shape           5       0.74%  GPU     CPU GPU ···
+gather          7       0.34%  GPU     CPU GPU ···
+range_1d        1       0.00%  GPU     CPU GPU ···
+concat          4       0.00%  GPU     CPU GPU ···
+
+ANE-eligible but not on ANE
+═══════════════════════════
+0 / 128 ops could run on ANE but were placed elsewhere (0.00% of cost)
+128 ops have no ANE support: add, band_part, concat, fill, gather, layer_norm, linear, matmul, mul, range_1d, relu, reshape, shape, softmax, sub, transpose

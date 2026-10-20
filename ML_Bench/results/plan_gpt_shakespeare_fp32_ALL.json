@@ -1,0 +1,2707 @@
+{
+  "model": "gpt_shakespeare_fp32",
+  "compute_units": "ALL",
+  "n_const": 166,
+  "ops": [
+    {
+      "idx": 0,
+      "op": "shape",
+      "output": "var_15_shape",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 1.445846295613713e-05,
+      "inputs": {
+        "x": [
+          "token_ids"
+        ]
+      }
+    },
+    {
+      "idx": 1,
+      "op": "gather",
+      "output": "gather_0",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 4.0917699003861237e-07,
+      "inputs": {
+        "axis": [
+          "gather_0_axis_0"
+        ],
+        "batch_dims": [
+          "gather_0_batch_dims_0"
+        ],
+        "indices": [
+          "gather_0_indices_0"
+        ],
+        "x": [
+          "var_15_shape"
+        ]
+      }
+    },
+    {
+      "idx": 2,
+      "op": "range_1d",
+      "output": "input_1",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 1.4514503510230685e-05,
+      "inputs": {
+        "end": [
+          "gather_0"
+        ],
+        "start": [
+          "const_0"
+        ],
+        "step": [
+          "const_1"
+        ]
+      }
+    },
+    {
+      "idx": 3,
+      "op": "gather",
+      "output": "var_26",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0007019840441102434,
+      "inputs": {
+        "axis": [
+          "var_26_axis_0"
+        ],
+        "batch_dims": [
+          "var_26_batch_dims_0"
+        ],
+        "indices": [
+          "token_ids"
+        ],
+        "x": [
+          "tok_emb_weight"
+        ]
+      }
+    },
+    {
+      "idx": 4,
+      "op": "gather",
+      "output": "var_30",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0027026958546030426,
+      "inputs": {
+        "axis": [
+          "var_30_axis_0"
+        ],
+        "batch_dims": [
+          "var_30_batch_dims_0"
+        ],
+        "indices": [
+          "input_1"
+        ],
+        "x": [
+          "pos_emb_weight"
+        ]
+      }
+    },
+    {
+      "idx": 5,
+      "op": "add",
+      "output": "x_3",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0024358084130546363,
+      "inputs": {
+        "x": [
+          "var_26"
+        ],
+        "y": [
+          "var_30"
+        ]
+      }
+    },
+    {
+      "idx": 6,
+      "op": "layer_norm",
+      "output": "x_5",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036726737530752055,
+      "inputs": {
+        "epsilon": [
+          "var_46"
+        ],
+        "gamma": [
+          "blocks_0_ln1_weight"
+        ],
+        "axes": [
+          "x_5_axes_0"
+        ],
+        "x": [
+          "x_3"
+        ],
+        "beta": [
+          "blocks_0_ln1_bias"
+        ]
+      }
+    },
+    {
+      "idx": 7,
+      "op": "shape",
+      "output": "var_60_shape",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 0.0018365049981998835,
+      "inputs": {
+        "x": [
+          "x_5"
+        ]
+      }
+    },
+    {
+      "idx": 8,
+      "op": "gather",
+      "output": "gather_2",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 4.910123880463349e-07,
+      "inputs": {
+        "axis": [
+          "gather_2_axis_0"
+        ],
+        "batch_dims": [
+          "gather_2_batch_dims_0"
+        ],
+        "indices": [
+          "gather_2_indices_0"
+        ],
+        "x": [
+          "var_60_shape"
+        ]
+      }
+    },
+    {
+      "idx": 9,
+      "op": "linear",
+      "output": "Q_1",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_0_attn_Wq_weight"
+        ],
+        "x": [
+          "x_5"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 10,
+      "op": "linear",
+      "output": "K_1",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_0_attn_Wk_weight"
+        ],
+        "x": [
+          "x_5"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 11,
+      "op": "linear",
+      "output": "V_1",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_0_attn_Wv_weight"
+        ],
+        "x": [
+          "x_5"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 12,
+      "op": "reshape",
+      "output": "var_70",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036728979152915796,
+      "inputs": {
+        "shape": [
+          "concat_0x"
+        ],
+        "x": [
+          "Q_1"
+        ]
+      }
+    },
+    {
+      "idx": 13,
+      "op": "reshape",
+      "output": "var_73",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036728979152915796,
+      "inputs": {
+        "shape": [
+          "concat_1x"
+        ],
+        "x": [
+          "K_1"
+        ]
+      }
+    },
+    {
+      "idx": 14,
+      "op": "reshape",
+      "output": "var_76",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036728979152915796,
+      "inputs": {
+        "shape": [
+          "concat_2x"
+        ],
+        "x": [
+          "V_1"
+        ]
+      }
+    },
+    {
+      "idx": 15,
+      "op": "transpose",
+      "output": "transpose_13",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "var_73"
+        ],
+        "perm": [
+          "transpose_13_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 16,
+      "op": "transpose",
+      "output": "transpose_12",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "var_70"
+        ],
+        "perm": [
+          "transpose_12_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 17,
+      "op": "matmul",
+      "output": "var_79",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.018363368765376028,
+      "inputs": {
+        "y": [
+          "transpose_13"
+        ],
+        "transpose_y": [
+          "var_79_transpose_y_0"
+        ],
+        "transpose_x": [
+          "var_79_transpose_x_0"
+        ],
+        "x": [
+          "transpose_12"
+        ]
+      }
+    },
+    {
+      "idx": 18,
+      "op": "mul",
+      "output": "_inversed_attention_weights_1",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0053631851026836016,
+      "inputs": {
+        "x": [
+          "var_79"
+        ],
+        "y": [
+          "_inversed_attention_weights_1_y_0"
+        ]
+      }
+    },
+    {
+      "idx": 19,
+      "op": "concat",
+      "output": "concat_3",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 2.0458849501930618e-07,
+      "inputs": {
+        "axis": [
+          "concat_3_axis_0"
+        ],
+        "values": [
+          "gather_2",
+          "gather_2"
+        ],
+        "interleave": [
+          "concat_3_interleave_0"
+        ]
+      }
+    },
+    {
+      "idx": 20,
+      "op": "fill",
+      "output": "var_83",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 0.003672841874737486,
+      "inputs": {
+        "shape": [
+          "concat_3"
+        ],
+        "value": [
+          "var_83_value_0"
+        ]
+      }
+    },
+    {
+      "idx": 21,
+      "op": "band_part",
+      "output": "band_part_0",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.007345459587258598,
+      "inputs": {
+        "lower": [
+          "band_part_0_lower_0"
+        ],
+        "upper": [
+          "band_part_0_upper_0"
+        ],
+        "x": [
+          "var_83"
+        ]
+      }
+    },
+    {
+      "idx": 22,
+      "op": "sub",
+      "output": "sub_0",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.004871616826109273,
+      "inputs": {
+        "x": [
+          "var_83"
+        ],
+        "y": [
+          "band_part_0"
+        ]
+      }
+    },
+    {
+      "idx": 23,
+      "op": "add",
+      "output": "var_86",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.01217904206527318,
+      "inputs": {
+        "x": [
+          "_inversed_attention_weights_1"
+        ],
+        "y": [
+          "sub_0"
+        ]
+      }
+    },
+    {
+      "idx": 24,
+      "op": "softmax",
+      "output": "attention_weights_3",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.02938144606515574,
+      "inputs": {
+        "axis": [
+          "var_40"
+        ],
+        "x": [
+          "var_86"
+        ]
+      }
+    },
+    {
+      "idx": 25,
+      "op": "transpose",
+      "output": "V_3",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "var_76"
+        ],
+        "perm": [
+          "V_3_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 26,
+      "op": "matmul",
+      "output": "attention_output_1",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.018363368765376028,
+      "inputs": {
+        "y": [
+          "V_3"
+        ],
+        "transpose_y": [
+          "attention_output_1_transpose_y_0"
+        ],
+        "transpose_x": [
+          "attention_output_1_transpose_x_0"
+        ],
+        "x": [
+          "attention_weights_3"
+        ]
+      }
+    },
+    {
+      "idx": 27,
+      "op": "transpose",
+      "output": "var_89",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "attention_output_1"
+        ],
+        "perm": [
+          "var_89_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 28,
+      "op": "reshape",
+      "output": "input_3",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.003672841874737486,
+      "inputs": {
+        "shape": [
+          "concat_4x"
+        ],
+        "x": [
+          "var_89"
+        ]
+      }
+    },
+    {
+      "idx": 29,
+      "op": "linear",
+      "output": "var_93",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_0_attn_Wo_weight"
+        ],
+        "x": [
+          "input_3"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 30,
+      "op": "add",
+      "output": "input_5",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0024358084130546363,
+      "inputs": {
+        "x": [
+          "x_3"
+        ],
+        "y": [
+          "var_93"
+        ]
+      }
+    },
+    {
+      "idx": 31,
+      "op": "layer_norm",
+      "output": "input_7",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036726737530752055,
+      "inputs": {
+        "epsilon": [
+          "var_46"
+        ],
+        "gamma": [
+          "blocks_0_ln2_weight"
+        ],
+        "axes": [
+          "input_7_axes_0"
+        ],
+        "x": [
+          "input_5"
+        ],
+        "beta": [
+          "blocks_0_ln2_bias"
+        ]
+      }
+    },
+    {
+      "idx": 32,
+      "op": "linear",
+      "output": "input_9",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023699833863124954,
+      "inputs": {
+        "weight": [
+          "blocks_0_ffn_fc1_weight"
+        ],
+        "x": [
+          "input_7"
+        ],
+        "bias": [
+          "blocks_0_ffn_fc1_bias"
+        ]
+      }
+    },
+    {
+      "idx": 33,
+      "op": "relu",
+      "output": "input_11",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0053631646438341,
+      "inputs": {
+        "x": [
+          "input_9"
+        ]
+      }
+    },
+    {
+      "idx": 34,
+      "op": "linear",
+      "output": "var_107",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.03791745604622212,
+      "inputs": {
+        "weight": [
+          "blocks_0_ffn_fc2_weight"
+        ],
+        "x": [
+          "input_11"
+        ],
+        "bias": [
+          "blocks_0_ffn_fc2_bias"
+        ]
+      }
+    },
+    {
+      "idx": 35,
+      "op": "add",
+      "output": "x_7",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0024358084130546363,
+      "inputs": {
+        "x": [
+          "input_5"
+        ],
+        "y": [
+          "var_107"
+        ]
+      }
+    },
+    {
+      "idx": 36,
+      "op": "layer_norm",
+      "output": "x_9",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036726737530752055,
+      "inputs": {
+        "epsilon": [
+          "var_122"
+        ],
+        "gamma": [
+          "blocks_1_ln1_weight"
+        ],
+        "axes": [
+          "x_9_axes_0"
+        ],
+        "x": [
+          "x_7"
+        ],
+        "beta": [
+          "blocks_1_ln1_bias"
+        ]
+      }
+    },
+    {
+      "idx": 37,
+      "op": "shape",
+      "output": "var_136_shape",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 0.0018365049981998835,
+      "inputs": {
+        "x": [
+          "x_9"
+        ]
+      }
+    },
+    {
+      "idx": 38,
+      "op": "gather",
+      "output": "gather_5",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 4.910123880463349e-07,
+      "inputs": {
+        "axis": [
+          "gather_5_axis_0"
+        ],
+        "batch_dims": [
+          "gather_5_batch_dims_0"
+        ],
+        "indices": [
+          "gather_5_indices_0"
+        ],
+        "x": [
+          "var_136_shape"
+        ]
+      }
+    },
+    {
+      "idx": 39,
+      "op": "linear",
+      "output": "Q_5",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_1_attn_Wq_weight"
+        ],
+        "x": [
+          "x_9"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 40,
+      "op": "linear",
+      "output": "K_5",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_1_attn_Wk_weight"
+        ],
+        "x": [
+          "x_9"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 41,
+      "op": "linear",
+      "output": "V_5",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_1_attn_Wv_weight"
+        ],
+        "x": [
+          "x_9"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 42,
+      "op": "reshape",
+      "output": "var_146",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036728979152915796,
+      "inputs": {
+        "shape": [
+          "concat_5x"
+        ],
+        "x": [
+          "Q_5"
+        ]
+      }
+    },
+    {
+      "idx": 43,
+      "op": "reshape",
+      "output": "var_149",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036728979152915796,
+      "inputs": {
+        "shape": [
+          "concat_6x"
+        ],
+        "x": [
+          "K_5"
+        ]
+      }
+    },
+    {
+      "idx": 44,
+      "op": "reshape",
+      "output": "var_152",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036728979152915796,
+      "inputs": {
+        "shape": [
+          "concat_7x"
+        ],
+        "x": [
+          "V_5"
+        ]
+      }
+    },
+    {
+      "idx": 45,
+      "op": "transpose",
+      "output": "transpose_15",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "var_149"
+        ],
+        "perm": [
+          "transpose_15_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 46,
+      "op": "transpose",
+      "output": "transpose_14",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "var_146"
+        ],
+        "perm": [
+          "transpose_14_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 47,
+      "op": "matmul",
+      "output": "var_155",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.018363368765376028,
+      "inputs": {
+        "y": [
+          "transpose_15"
+        ],
+        "transpose_y": [
+          "var_155_transpose_y_0"
+        ],
+        "transpose_x": [
+          "var_155_transpose_x_0"
+        ],
+        "x": [
+          "transpose_14"
+        ]
+      }
+    },
+    {
+      "idx": 48,
+      "op": "mul",
+      "output": "_inversed_attention_weights_5",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0053631851026836016,
+      "inputs": {
+        "x": [
+          "var_155"
+        ],
+        "y": [
+          "_inversed_attention_weights_5_y_0"
+        ]
+      }
+    },
+    {
+      "idx": 49,
+      "op": "concat",
+      "output": "concat_8",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 2.0458849501930618e-07,
+      "inputs": {
+        "axis": [
+          "concat_8_axis_0"
+        ],
+        "values": [
+          "gather_5",
+          "gather_5"
+        ],
+        "interleave": [
+          "concat_8_interleave_0"
+        ]
+      }
+    },
+    {
+      "idx": 50,
+      "op": "fill",
+      "output": "var_159",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 0.003672841874737486,
+      "inputs": {
+        "shape": [
+          "concat_8"
+        ],
+        "value": [
+          "var_159_value_0"
+        ]
+      }
+    },
+    {
+      "idx": 51,
+      "op": "band_part",
+      "output": "band_part_1",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.007345459587258598,
+      "inputs": {
+        "lower": [
+          "band_part_1_lower_0"
+        ],
+        "upper": [
+          "band_part_1_upper_0"
+        ],
+        "x": [
+          "var_159"
+        ]
+      }
+    },
+    {
+      "idx": 52,
+      "op": "sub",
+      "output": "sub_1",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.004871616826109273,
+      "inputs": {
+        "x": [
+          "var_159"
+        ],
+        "y": [
+          "band_part_1"
+        ]
+      }
+    },
+    {
+      "idx": 53,
+      "op": "add",
+      "output": "var_162",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.01217904206527318,
+      "inputs": {
+        "x": [
+          "_inversed_attention_weights_5"
+        ],
+        "y": [
+          "sub_1"
+        ]
+      }
+    },
+    {
+      "idx": 54,
+      "op": "softmax",
+      "output": "attention_weights_7",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.02938144606515574,
+      "inputs": {
+        "axis": [
+          "var_116"
+        ],
+        "x": [
+          "var_162"
+        ]
+      }
+    },
+    {
+      "idx": 55,
+      "op": "transpose",
+      "output": "V_7",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "var_152"
+        ],
+        "perm": [
+          "V_7_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 56,
+      "op": "matmul",
+      "output": "attention_output_3",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.018363368765376028,
+      "inputs": {
+        "y": [
+          "V_7"
+        ],
+        "transpose_y": [
+          "attention_output_3_transpose_y_0"
+        ],
+        "transpose_x": [
+          "attention_output_3_transpose_x_0"
+        ],
+        "x": [
+          "attention_weights_7"
+        ]
+      }
+    },
+    {
+      "idx": 57,
+      "op": "transpose",
+      "output": "var_165",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "attention_output_3"
+        ],
+        "perm": [
+          "var_165_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 58,
+      "op": "reshape",
+      "output": "input_13",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.003672841874737486,
+      "inputs": {
+        "shape": [
+          "concat_9x"
+        ],
+        "x": [
+          "var_165"
+        ]
+      }
+    },
+    {
+      "idx": 59,
+      "op": "linear",
+      "output": "var_169",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_1_attn_Wo_weight"
+        ],
+        "x": [
+          "input_13"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 60,
+      "op": "add",
+      "output": "input_15",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0024358084130546363,
+      "inputs": {
+        "x": [
+          "x_7"
+        ],
+        "y": [
+          "var_169"
+        ]
+      }
+    },
+    {
+      "idx": 61,
+      "op": "layer_norm",
+      "output": "input_17",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036726737530752055,
+      "inputs": {
+        "epsilon": [
+          "var_122"
+        ],
+        "gamma": [
+          "blocks_1_ln2_weight"
+        ],
+        "axes": [
+          "input_17_axes_0"
+        ],
+        "x": [
+          "input_15"
+        ],
+        "beta": [
+          "blocks_1_ln2_bias"
+        ]
+      }
+    },
+    {
+      "idx": 62,
+      "op": "linear",
+      "output": "input_19",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023699833863124954,
+      "inputs": {
+        "weight": [
+          "blocks_1_ffn_fc1_weight"
+        ],
+        "x": [
+          "input_17"
+        ],
+        "bias": [
+          "blocks_1_ffn_fc1_bias"
+        ]
+      }
+    },
+    {
+      "idx": 63,
+      "op": "relu",
+      "output": "input_21",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0053631646438341,
+      "inputs": {
+        "x": [
+          "input_19"
+        ]
+      }
+    },
+    {
+      "idx": 64,
+      "op": "linear",
+      "output": "var_183",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.03791745604622212,
+      "inputs": {
+        "weight": [
+          "blocks_1_ffn_fc2_weight"
+        ],
+        "x": [
+          "input_21"
+        ],
+        "bias": [
+          "blocks_1_ffn_fc2_bias"
+        ]
+      }
+    },
+    {
+      "idx": 65,
+      "op": "add",
+      "output": "x_11",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0024358084130546363,
+      "inputs": {
+        "x": [
+          "input_15"
+        ],
+        "y": [
+          "var_183"
+        ]
+      }
+    },
+    {
+      "idx": 66,
+      "op": "layer_norm",
+      "output": "x_13",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036726737530752055,
+      "inputs": {
+        "epsilon": [
+          "var_198"
+        ],
+        "gamma": [
+          "blocks_2_ln1_weight"
+        ],
+        "axes": [
+          "x_13_axes_0"
+        ],
+        "x": [
+          "x_11"
+        ],
+        "beta": [
+          "blocks_2_ln1_bias"
+        ]
+      }
+    },
+    {
+      "idx": 67,
+      "op": "shape",
+      "output": "var_212_shape",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 0.0018365049981998835,
+      "inputs": {
+        "x": [
+          "x_13"
+        ]
+      }
+    },
+    {
+      "idx": 68,
+      "op": "gather",
+      "output": "gather_8",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 4.910123880463349e-07,
+      "inputs": {
+        "axis": [
+          "gather_8_axis_0"
+        ],
+        "batch_dims": [
+          "gather_8_batch_dims_0"
+        ],
+        "indices": [
+          "gather_8_indices_0"
+        ],
+        "x": [
+          "var_212_shape"
+        ]
+      }
+    },
+    {
+      "idx": 69,
+      "op": "linear",
+      "output": "Q_9",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_2_attn_Wq_weight"
+        ],
+        "x": [
+          "x_13"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 70,
+      "op": "linear",
+      "output": "K_9",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_2_attn_Wk_weight"
+        ],
+        "x": [
+          "x_13"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 71,
+      "op": "linear",
+      "output": "V_9",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_2_attn_Wv_weight"
+        ],
+        "x": [
+          "x_13"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 72,
+      "op": "reshape",
+      "output": "var_222",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036728979152915796,
+      "inputs": {
+        "shape": [
+          "concat_10x"
+        ],
+        "x": [
+          "Q_9"
+        ]
+      }
+    },
+    {
+      "idx": 73,
+      "op": "reshape",
+      "output": "var_225",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036728979152915796,
+      "inputs": {
+        "shape": [
+          "concat_11x"
+        ],
+        "x": [
+          "K_9"
+        ]
+      }
+    },
+    {
+      "idx": 74,
+      "op": "reshape",
+      "output": "var_228",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036728979152915796,
+      "inputs": {
+        "shape": [
+          "concat_12x"
+        ],
+        "x": [
+          "V_9"
+        ]
+      }
+    },
+    {
+      "idx": 75,
+      "op": "transpose",
+      "output": "transpose_17",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "var_225"
+        ],
+        "perm": [
+          "transpose_17_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 76,
+      "op": "transpose",
+      "output": "transpose_16",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "var_222"
+        ],
+        "perm": [
+          "transpose_16_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 77,
+      "op": "matmul",
+      "output": "var_231",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.018363368765376028,
+      "inputs": {
+        "y": [
+          "transpose_17"
+        ],
+        "transpose_y": [
+          "var_231_transpose_y_0"
+        ],
+        "transpose_x": [
+          "var_231_transpose_x_0"
+        ],
+        "x": [
+          "transpose_16"
+        ]
+      }
+    },
+    {
+      "idx": 78,
+      "op": "mul",
+      "output": "_inversed_attention_weights_9",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0053631851026836016,
+      "inputs": {
+        "x": [
+          "var_231"
+        ],
+        "y": [
+          "_inversed_attention_weights_9_y_0"
+        ]
+      }
+    },
+    {
+      "idx": 79,
+      "op": "concat",
+      "output": "concat_13",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 2.0458849501930618e-07,
+      "inputs": {
+        "axis": [
+          "concat_13_axis_0"
+        ],
+        "values": [
+          "gather_8",
+          "gather_8"
+        ],
+        "interleave": [
+          "concat_13_interleave_0"
+        ]
+      }
+    },
+    {
+      "idx": 80,
+      "op": "fill",
+      "output": "var_235",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 0.003672841874737486,
+      "inputs": {
+        "shape": [
+          "concat_13"
+        ],
+        "value": [
+          "var_235_value_0"
+        ]
+      }
+    },
+    {
+      "idx": 81,
+      "op": "band_part",
+      "output": "band_part_2",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.007345459587258598,
+      "inputs": {
+        "lower": [
+          "band_part_2_lower_0"
+        ],
+        "upper": [
+          "band_part_2_upper_0"
+        ],
+        "x": [
+          "var_235"
+        ]
+      }
+    },
+    {
+      "idx": 82,
+      "op": "sub",
+      "output": "sub_2",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.004871616826109273,
+      "inputs": {
+        "x": [
+          "var_235"
+        ],
+        "y": [
+          "band_part_2"
+        ]
+      }
+    },
+    {
+      "idx": 83,
+      "op": "add",
+      "output": "var_238",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.01217904206527318,
+      "inputs": {
+        "x": [
+          "_inversed_attention_weights_9"
+        ],
+        "y": [
+          "sub_2"
+        ]
+      }
+    },
+    {
+      "idx": 84,
+      "op": "softmax",
+      "output": "attention_weights_11",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.02938144606515574,
+      "inputs": {
+        "axis": [
+          "var_192"
+        ],
+        "x": [
+          "var_238"
+        ]
+      }
+    },
+    {
+      "idx": 85,
+      "op": "transpose",
+      "output": "V_11",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "var_228"
+        ],
+        "perm": [
+          "V_11_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 86,
+      "op": "matmul",
+      "output": "attention_output_5",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.018363368765376028,
+      "inputs": {
+        "y": [
+          "V_11"
+        ],
+        "transpose_y": [
+          "attention_output_5_transpose_y_0"
+        ],
+        "transpose_x": [
+          "attention_output_5_transpose_x_0"
+        ],
+        "x": [
+          "attention_weights_11"
+        ]
+      }
+    },
+    {
+      "idx": 87,
+      "op": "transpose",
+      "output": "var_241",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "attention_output_5"
+        ],
+        "perm": [
+          "var_241_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 88,
+      "op": "reshape",
+      "output": "input_23",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.003672841874737486,
+      "inputs": {
+        "shape": [
+          "concat_14x"
+        ],
+        "x": [
+          "var_241"
+        ]
+      }
+    },
+    {
+      "idx": 89,
+      "op": "linear",
+      "output": "var_245",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_2_attn_Wo_weight"
+        ],
+        "x": [
+          "input_23"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 90,
+      "op": "add",
+      "output": "input_25",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0024358084130546363,
+      "inputs": {
+        "x": [
+          "x_11"
+        ],
+        "y": [
+          "var_245"
+        ]
+      }
+    },
+    {
+      "idx": 91,
+      "op": "layer_norm",
+      "output": "input_27",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036726737530752055,
+      "inputs": {
+        "epsilon": [
+          "var_198"
+        ],
+        "gamma": [
+          "blocks_2_ln2_weight"
+        ],
+        "axes": [
+          "input_27_axes_0"
+        ],
+        "x": [
+          "input_25"
+        ],
+        "beta": [
+          "blocks_2_ln2_bias"
+        ]
+      }
+    },
+    {
+      "idx": 92,
+      "op": "linear",
+      "output": "input_29",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023699833863124954,
+      "inputs": {
+        "weight": [
+          "blocks_2_ffn_fc1_weight"
+        ],
+        "x": [
+          "input_27"
+        ],
+        "bias": [
+          "blocks_2_ffn_fc1_bias"
+        ]
+      }
+    },
+    {
+      "idx": 93,
+      "op": "relu",
+      "output": "input_31",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0053631646438341,
+      "inputs": {
+        "x": [
+          "input_29"
+        ]
+      }
+    },
+    {
+      "idx": 94,
+      "op": "linear",
+      "output": "var_259",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.03791745604622212,
+      "inputs": {
+        "weight": [
+          "blocks_2_ffn_fc2_weight"
+        ],
+        "x": [
+          "input_31"
+        ],
+        "bias": [
+          "blocks_2_ffn_fc2_bias"
+        ]
+      }
+    },
+    {
+      "idx": 95,
+      "op": "add",
+      "output": "x_15",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0024358084130546363,
+      "inputs": {
+        "x": [
+          "input_25"
+        ],
+        "y": [
+          "var_259"
+        ]
+      }
+    },
+    {
+      "idx": 96,
+      "op": "layer_norm",
+      "output": "x",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036726737530752055,
+      "inputs": {
+        "epsilon": [
+          "var_274"
+        ],
+        "gamma": [
+          "blocks_3_ln1_weight"
+        ],
+        "axes": [
+          "x_axes_0"
+        ],
+        "x": [
+          "x_15"
+        ],
+        "beta": [
+          "blocks_3_ln1_bias"
+        ]
+      }
+    },
+    {
+      "idx": 97,
+      "op": "shape",
+      "output": "var_288_shape",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 0.0018365049981998835,
+      "inputs": {
+        "x": [
+          "x"
+        ]
+      }
+    },
+    {
+      "idx": 98,
+      "op": "gather",
+      "output": "gather_11",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 4.910123880463349e-07,
+      "inputs": {
+        "axis": [
+          "gather_11_axis_0"
+        ],
+        "batch_dims": [
+          "gather_11_batch_dims_0"
+        ],
+        "indices": [
+          "gather_11_indices_0"
+        ],
+        "x": [
+          "var_288_shape"
+        ]
+      }
+    },
+    {
+      "idx": 99,
+      "op": "linear",
+      "output": "Q_13",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_3_attn_Wq_weight"
+        ],
+        "x": [
+          "x"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 100,
+      "op": "linear",
+      "output": "K_13",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_3_attn_Wk_weight"
+        ],
+        "x": [
+          "x"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 101,
+      "op": "linear",
+      "output": "V_13",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_3_attn_Wv_weight"
+        ],
+        "x": [
+          "x"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 102,
+      "op": "reshape",
+      "output": "var_298",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036728979152915796,
+      "inputs": {
+        "shape": [
+          "concat_15x"
+        ],
+        "x": [
+          "Q_13"
+        ]
+      }
+    },
+    {
+      "idx": 103,
+      "op": "reshape",
+      "output": "var_301",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036728979152915796,
+      "inputs": {
+        "shape": [
+          "concat_16x"
+        ],
+        "x": [
+          "K_13"
+        ]
+      }
+    },
+    {
+      "idx": 104,
+      "op": "reshape",
+      "output": "var_304",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036728979152915796,
+      "inputs": {
+        "shape": [
+          "concat_17x"
+        ],
+        "x": [
+          "V_13"
+        ]
+      }
+    },
+    {
+      "idx": 105,
+      "op": "transpose",
+      "output": "transpose_19",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "var_301"
+        ],
+        "perm": [
+          "transpose_19_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 106,
+      "op": "transpose",
+      "output": "transpose_18",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "var_298"
+        ],
+        "perm": [
+          "transpose_18_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 107,
+      "op": "matmul",
+      "output": "var_307",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.018363368765376028,
+      "inputs": {
+        "y": [
+          "transpose_19"
+        ],
+        "transpose_y": [
+          "var_307_transpose_y_0"
+        ],
+        "transpose_x": [
+          "var_307_transpose_x_0"
+        ],
+        "x": [
+          "transpose_18"
+        ]
+      }
+    },
+    {
+      "idx": 108,
+      "op": "mul",
+      "output": "_inversed_attention_weights_13",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0053631851026836016,
+      "inputs": {
+        "x": [
+          "var_307"
+        ],
+        "y": [
+          "_inversed_attention_weights_13_y_0"
+        ]
+      }
+    },
+    {
+      "idx": 109,
+      "op": "concat",
+      "output": "concat_18",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 2.0458849501930618e-07,
+      "inputs": {
+        "axis": [
+          "concat_18_axis_0"
+        ],
+        "values": [
+          "gather_11",
+          "gather_11"
+        ],
+        "interleave": [
+          "concat_18_interleave_0"
+        ]
+      }
+    },
+    {
+      "idx": 110,
+      "op": "fill",
+      "output": "var_311",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU",
+        "ANE"
+      ],
+      "cost": 0.003672841874737486,
+      "inputs": {
+        "shape": [
+          "concat_18"
+        ],
+        "value": [
+          "var_311_value_0"
+        ]
+      }
+    },
+    {
+      "idx": 111,
+      "op": "band_part",
+      "output": "band_part_3",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.007345459587258598,
+      "inputs": {
+        "lower": [
+          "band_part_3_lower_0"
+        ],
+        "upper": [
+          "band_part_3_upper_0"
+        ],
+        "x": [
+          "var_311"
+        ]
+      }
+    },
+    {
+      "idx": 112,
+      "op": "sub",
+      "output": "sub_3",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.004871616826109273,
+      "inputs": {
+        "x": [
+          "var_311"
+        ],
+        "y": [
+          "band_part_3"
+        ]
+      }
+    },
+    {
+      "idx": 113,
+      "op": "add",
+      "output": "var_314",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.01217904206527318,
+      "inputs": {
+        "x": [
+          "_inversed_attention_weights_13"
+        ],
+        "y": [
+          "sub_3"
+        ]
+      }
+    },
+    {
+      "idx": 114,
+      "op": "softmax",
+      "output": "attention_weights",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.02938144606515574,
+      "inputs": {
+        "axis": [
+          "var_268"
+        ],
+        "x": [
+          "var_314"
+        ]
+      }
+    },
+    {
+      "idx": 115,
+      "op": "transpose",
+      "output": "V",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "var_304"
+        ],
+        "perm": [
+          "V_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 116,
+      "op": "matmul",
+      "output": "attention_output",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.018363368765376028,
+      "inputs": {
+        "y": [
+          "V"
+        ],
+        "transpose_y": [
+          "attention_output_transpose_y_0"
+        ],
+        "transpose_x": [
+          "attention_output_transpose_x_0"
+        ],
+        "x": [
+          "attention_weights"
+        ]
+      }
+    },
+    {
+      "idx": 117,
+      "op": "transpose",
+      "output": "var_317",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.016027348343124064,
+      "inputs": {
+        "x": [
+          "attention_output"
+        ],
+        "perm": [
+          "var_317_perm_0"
+        ]
+      }
+    },
+    {
+      "idx": 118,
+      "op": "reshape",
+      "output": "input_33",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.003672841874737486,
+      "inputs": {
+        "shape": [
+          "concat_19x"
+        ],
+        "x": [
+          "var_317"
+        ]
+      }
+    },
+    {
+      "idx": 119,
+      "op": "linear",
+      "output": "var_321",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023698749037040284,
+      "inputs": {
+        "weight": [
+          "blocks_3_attn_Wo_weight"
+        ],
+        "x": [
+          "input_33"
+        ],
+        "bias": [
+          "linear_0_bias_0"
+        ]
+      }
+    },
+    {
+      "idx": 120,
+      "op": "add",
+      "output": "input_35",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0024358084130546363,
+      "inputs": {
+        "x": [
+          "x_15"
+        ],
+        "y": [
+          "var_321"
+        ]
+      }
+    },
+    {
+      "idx": 121,
+      "op": "layer_norm",
+      "output": "input_37",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036726737530752055,
+      "inputs": {
+        "epsilon": [
+          "var_274"
+        ],
+        "gamma": [
+          "blocks_3_ln2_weight"
+        ],
+        "axes": [
+          "input_37_axes_0"
+        ],
+        "x": [
+          "input_35"
+        ],
+        "beta": [
+          "blocks_3_ln2_bias"
+        ]
+      }
+    },
+    {
+      "idx": 122,
+      "op": "linear",
+      "output": "input_39",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0023699833863124954,
+      "inputs": {
+        "weight": [
+          "blocks_3_ffn_fc1_weight"
+        ],
+        "x": [
+          "input_37"
+        ],
+        "bias": [
+          "blocks_3_ffn_fc1_bias"
+        ]
+      }
+    },
+    {
+      "idx": 123,
+      "op": "relu",
+      "output": "input_41",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0053631646438341,
+      "inputs": {
+        "x": [
+          "input_39"
+        ]
+      }
+    },
+    {
+      "idx": 124,
+      "op": "linear",
+      "output": "var_335",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.03791745604622212,
+      "inputs": {
+        "weight": [
+          "blocks_3_ffn_fc2_weight"
+        ],
+        "x": [
+          "input_41"
+        ],
+        "bias": [
+          "blocks_3_ffn_fc2_bias"
+        ]
+      }
+    },
+    {
+      "idx": 125,
+      "op": "add",
+      "output": "input_43",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0024358084130546363,
+      "inputs": {
+        "x": [
+          "input_35"
+        ],
+        "y": [
+          "var_335"
+        ]
+      }
+    },
+    {
+      "idx": 126,
+      "op": "layer_norm",
+      "output": "input",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.0036726737530752055,
+      "inputs": {
+        "epsilon": [
+          "var_338"
+        ],
+        "gamma": [
+          "ln_f_weight"
+        ],
+        "axes": [
+          "input_axes_0"
+        ],
+        "x": [
+          "input_43"
+        ],
+        "beta": [
+          "ln_f_bias"
+        ]
+      }
+    },
+    {
+      "idx": 127,
+      "op": "linear",
+      "output": "logits",
+      "device": "GPU",
+      "supported": [
+        "CPU",
+        "GPU"
+      ],
+      "cost": 0.00035512495906051466,
+      "inputs": {
+        "weight": [
+          "head_weight"
+        ],
+        "x": [
+          "input"
+        ],
+        "bias": [
+          "linear_24_bias_0"
+        ]
+      }
+    }
+  ]
+}
