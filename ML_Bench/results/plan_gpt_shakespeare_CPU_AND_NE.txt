@@ -1,6 +1,6 @@
 Model         : gpt_shakespeare
 Compute units : CPU_AND_NE
-Ops           : 129 compute  (+167 const, hidden)
+Ops           : 109 compute  (+140 const, hidden)
 Total cost    : 1.0000  (relative units; percentages below are of this total)
 
 Operations
@@ -10,163 +10,143 @@ Operations
   0  shape       var_15_shape                  CPU     CPU ··· ANE    0.00%
   1  gather      gather_0                      CPU     CPU ··· ANE    0.00%
   2  range_1d    input_1                       CPU     CPU ··· ···    0.00%
-  3  gather      var_26_cast_fp16              CPU     CPU ··· ···    0.04%
-  4  gather      var_30_cast_fp16              CPU     CPU ··· ···    0.17%
-  5  add         x_3_cast_fp16                 ANE     CPU ··· ANE    0.29%
-  6  layer_norm  x_5_cast_fp16                 ANE     CPU ··· ANE    0.11%
-  7  shape       var_60_shape_cast_fp16        ANE     CPU ··· ANE    0.05%
-  8  gather      gather_2                      ANE     CPU ··· ANE    0.00%
-  9  linear      linear_0_cast_fp16            ANE     CPU ··· ANE    0.85%
- 10  linear      linear_1_cast_fp16            ANE     CPU ··· ANE    0.85%
- 11  linear      linear_2_cast_fp16            ANE     CPU ··· ANE    0.85%
- 12  reshape     var_70_cast_fp16              ANE     CPU ··· ANE    0.11%
- 13  reshape     var_73_cast_fp16              ANE     CPU ··· ANE    0.11%
- 14  reshape     var_76_cast_fp16              ANE     CPU ··· ANE    0.11%
- 15  transpose   transpose_13                  ANE     CPU ··· ANE    0.19%
- 16  transpose   transpose_12                  ANE     CPU ··· ANE    0.19%
- 17  matmul      var_79_cast_fp16              ANE     CPU ··· ANE    0.53%
- 18  mul         _inversed_attention_weights…  ANE     CPU ··· ANE    0.77%
- 19  concat      concat_3                      ANE     CPU ··· ANE    0.00%
- 20  fill        var_83_cast_fp16              ANE     CPU ··· ANE    0.11%
- 21  band_part   band_part_0_cast_fp16         CPU     CPU ··· ···    0.25%
- 22  sub         sub_0_cast_fp16               CPU     CPU ··· ···    0.75%
- 23  add         var_86_cast_fp16              ANE     CPU ··· ANE    1.45%
- 24  softmax     attention_weights_3_cast_fp…  ANE     CPU ··· ANE    0.84%
- 25  transpose   V_3_cast_fp16                 ANE     CPU ··· ANE    0.19%
- 26  matmul      attention_output_1_cast_fp16  ANE     CPU ··· ANE    0.53%
- 27  transpose   var_89_cast_fp16              ANE     CPU ··· ANE    0.19%
- 28  reshape     input_3_cast_fp16             ANE     CPU ··· ANE    0.11%
- 29  linear      linear_3_cast_fp16            ANE     CPU ··· ANE    0.85%
- 30  add         input_5_cast_fp16             ANE     CPU ··· ANE    0.29%
- 31  layer_norm  input_7_cast_fp16             ANE     CPU ··· ANE    0.11%
- 32  linear      linear_4_cast_fp16            ANE     CPU ··· ANE    0.09%
- 33  relu        input_11_cast_fp16            ANE     CPU ··· ANE    0.31%
- 34  linear      linear_5_cast_fp16            ANE     CPU ··· ANE   13.58%
- 35  add         x_7_cast_fp16                 ANE     CPU ··· ANE    0.29%
- 36  layer_norm  x_9_cast_fp16                 ANE     CPU ··· ANE    0.11%
- 37  shape       var_136_shape_cast_fp16       ANE     CPU ··· ANE    0.05%
- 38  gather      gather_5                      ANE     CPU ··· ANE    0.00%
- 39  linear      linear_6_cast_fp16            ANE     CPU ··· ANE    0.85%
- 40  linear      linear_7_cast_fp16            ANE     CPU ··· ANE    0.85%
- 41  linear      linear_8_cast_fp16            ANE     CPU ··· ANE    0.85%
- 42  reshape     var_146_cast_fp16             ANE     CPU ··· ANE    0.11%
- 43  reshape     var_149_cast_fp16             ANE     CPU ··· ANE    0.11%
- 44  reshape     var_152_cast_fp16             ANE     CPU ··· ANE    0.11%
- 45  transpose   transpose_15                  ANE     CPU ··· ANE    0.19%
- 46  transpose   transpose_14                  ANE     CPU ··· ANE    0.19%
- 47  matmul      var_155_cast_fp16             ANE     CPU ··· ANE    0.53%
- 48  mul         _inversed_attention_weights…  ANE     CPU ··· ANE    0.77%
- 49  concat      concat_8                      ANE     CPU ··· ANE    0.00%
- 50  fill        var_159_cast_fp16             ANE     CPU ··· ANE    0.11%
- 51  band_part   band_part_1_cast_fp16         CPU     CPU ··· ···    0.25%
- 52  sub         sub_1_cast_fp16               CPU     CPU ··· ···    0.75%
- 53  add         var_162_cast_fp16             ANE     CPU ··· ANE    1.45%
- 54  softmax     attention_weights_7_cast_fp…  ANE     CPU ··· ANE    0.84%
- 55  transpose   V_7_cast_fp16                 ANE     CPU ··· ANE    0.19%
- 56  matmul      attention_output_3_cast_fp16  ANE     CPU ··· ANE    0.53%
- 57  transpose   var_165_cast_fp16             ANE     CPU ··· ANE    0.19%
- 58  reshape     input_13_cast_fp16            ANE     CPU ··· ANE    0.11%
- 59  linear      linear_9_cast_fp16            ANE     CPU ··· ANE    0.85%
- 60  add         input_15_cast_fp16            ANE     CPU ··· ANE    0.29%
- 61  layer_norm  input_17_cast_fp16            ANE     CPU ··· ANE    0.11%
- 62  linear      linear_10_cast_fp16           ANE     CPU ··· ANE    0.09%
- 63  relu        input_21_cast_fp16            ANE     CPU ··· ANE    0.31%
- 64  linear      linear_11_cast_fp16           ANE     CPU ··· ANE   13.58%
- 65  add         x_11_cast_fp16                ANE     CPU ··· ANE    0.29%
- 66  layer_norm  x_13_cast_fp16                ANE     CPU ··· ANE    0.11%
- 67  shape       var_212_shape_cast_fp16       ANE     CPU ··· ANE    0.05%
- 68  gather      gather_8                      ANE     CPU ··· ANE    0.00%
- 69  linear      linear_12_cast_fp16           ANE     CPU ··· ANE    0.85%
- 70  linear      linear_13_cast_fp16           ANE     CPU ··· ANE    0.85%
- 71  linear      linear_14_cast_fp16           ANE     CPU ··· ANE    0.85%
- 72  reshape     var_222_cast_fp16             ANE     CPU ··· ANE    0.11%
- 73  reshape     var_225_cast_fp16             ANE     CPU ··· ANE    0.11%
- 74  reshape     var_228_cast_fp16             ANE     CPU ··· ANE    0.11%
- 75  transpose   transpose_17                  ANE     CPU ··· ANE    0.19%
- 76  transpose   transpose_16                  ANE     CPU ··· ANE    0.19%
- 77  matmul      var_231_cast_fp16             ANE     CPU ··· ANE    0.53%
- 78  mul         _inversed_attention_weights…  ANE     CPU ··· ANE    0.77%
- 79  concat      concat_13                     ANE     CPU ··· ANE    0.00%
- 80  fill        var_235_cast_fp16             ANE     CPU ··· ANE    0.11%
- 81  band_part   band_part_2_cast_fp16         CPU     CPU ··· ···    0.25%
- 82  sub         sub_2_cast_fp16               CPU     CPU ··· ···    0.75%
- 83  add         var_238_cast_fp16             ANE     CPU ··· ANE    1.45%
- 84  softmax     attention_weights_11_cast_f…  ANE     CPU ··· ANE    0.84%
- 85  transpose   V_11_cast_fp16                ANE     CPU ··· ANE    0.19%
- 86  matmul      attention_output_5_cast_fp16  ANE     CPU ··· ANE    0.53%
- 87  transpose   var_241_cast_fp16             ANE     CPU ··· ANE    0.19%
- 88  reshape     input_23_cast_fp16            ANE     CPU ··· ANE    0.11%
- 89  linear      linear_15_cast_fp16           ANE     CPU ··· ANE    0.85%
- 90  add         input_25_cast_fp16            ANE     CPU ··· ANE    0.29%
- 91  layer_norm  input_27_cast_fp16            ANE     CPU ··· ANE    0.11%
- 92  linear      linear_16_cast_fp16           ANE     CPU ··· ANE    0.09%
- 93  relu        input_31_cast_fp16            ANE     CPU ··· ANE    0.31%
- 94  linear      linear_17_cast_fp16           ANE     CPU ··· ANE   13.58%
- 95  add         x_15_cast_fp16                ANE     CPU ··· ANE    0.29%
- 96  layer_norm  x_cast_fp16                   ANE     CPU ··· ANE    0.11%
- 97  shape       var_288_shape_cast_fp16       ANE     CPU ··· ANE    0.05%
- 98  gather      gather_11                     ANE     CPU ··· ANE    0.00%
- 99  linear      linear_18_cast_fp16           ANE     CPU ··· ANE    0.85%
-100  linear      linear_19_cast_fp16           ANE     CPU ··· ANE    0.85%
-101  linear      linear_20_cast_fp16           ANE     CPU ··· ANE    0.85%
-102  reshape     var_298_cast_fp16             ANE     CPU ··· ANE    0.11%
-103  reshape     var_301_cast_fp16             ANE     CPU ··· ANE    0.11%
-104  reshape     var_304_cast_fp16             ANE     CPU ··· ANE    0.11%
-105  transpose   transpose_19                  ANE     CPU ··· ANE    0.19%
-106  transpose   transpose_18                  ANE     CPU ··· ANE    0.19%
-107  matmul      var_307_cast_fp16             ANE     CPU ··· ANE    0.53%
-108  mul         _inversed_attention_weights…  ANE     CPU ··· ANE    0.77%
-109  concat      concat_18                     ANE     CPU ··· ANE    0.00%
-110  fill        var_311_cast_fp16             ANE     CPU ··· ANE    0.11%
-111  band_part   band_part_3_cast_fp16         CPU     CPU ··· ···    0.25%
-112  sub         sub_3_cast_fp16               CPU     CPU ··· ···    0.75%
-113  add         var_314_cast_fp16             ANE     CPU ··· ANE    1.45%
-114  softmax     attention_weights_cast_fp16   ANE     CPU ··· ANE    0.84%
-115  transpose   V_cast_fp16                   ANE     CPU ··· ANE    0.19%
-116  matmul      attention_output_cast_fp16    ANE     CPU ··· ANE    0.53%
-117  transpose   var_317_cast_fp16             ANE     CPU ··· ANE    0.19%
-118  reshape     input_33_cast_fp16            ANE     CPU ··· ANE    0.11%
-119  linear      linear_21_cast_fp16           ANE     CPU ··· ANE    0.85%
-120  add         input_35_cast_fp16            ANE     CPU ··· ANE    0.29%
-121  layer_norm  input_37_cast_fp16            ANE     CPU ··· ANE    0.11%
-122  linear      linear_22_cast_fp16           ANE     CPU ··· ANE    0.09%
-123  relu        input_41_cast_fp16            ANE     CPU ··· ANE    0.31%
-124  linear      linear_23_cast_fp16           ANE     CPU ··· ANE   13.58%
-125  add         input_43_cast_fp16            ANE     CPU ··· ANE    0.29%
-126  layer_norm  input_cast_fp16               ANE     CPU ··· ANE    0.11%
-127  linear      linear_24_cast_fp16           ANE     CPU ··· ANE    0.85%
-128  cast        logits                        ANE     CPU ··· ANE    0.08%
+  3  concat      concat_0                      CPU     CPU ··· ANE    0.00%
+  4  fill        mask_1_cast_fp16              CPU     CPU ··· ANE    0.13%
+  5  band_part   band_part_0_cast_fp16         CPU     CPU ··· ···    0.26%
+  6  sub         sub_0_cast_fp16               CPU     CPU ··· ···    0.78%
+  7  gather      var_37_cast_fp16              CPU     CPU ··· ···    0.05%
+  8  gather      var_41_cast_fp16              CPU     CPU ··· ···    0.17%
+  9  add         x_3_cast_fp16                 ANE     CPU ··· ANE    0.30%
+ 10  layer_norm  x_5_cast_fp16                 ANE     CPU ··· ANE    0.11%
+ 11  linear      linear_0_cast_fp16            ANE     CPU ··· ANE    0.88%
+ 12  linear      linear_1_cast_fp16            ANE     CPU ··· ANE    0.88%
+ 13  linear      linear_2_cast_fp16            ANE     CPU ··· ANE    0.88%
+ 14  reshape     var_80_cast_fp16              ANE     CPU ··· ANE    0.11%
+ 15  reshape     var_83_cast_fp16              ANE     CPU ··· ANE    0.11%
+ 16  reshape     var_86_cast_fp16              ANE     CPU ··· ANE    0.11%
+ 17  transpose   transpose_13                  ANE     CPU ··· ANE    0.19%
+ 18  transpose   transpose_12                  ANE     CPU ··· ANE    0.19%
+ 19  matmul      var_89_cast_fp16              ANE     CPU ··· ANE    0.55%
+ 20  mul         _inversed_attention_weights…  ANE     CPU ··· ANE    0.80%
+ 21  add         var_93_cast_fp16              ANE     CPU ··· ANE    1.50%
+ 22  softmax     attention_weights_3_cast_fp…  ANE     CPU ··· ANE    0.87%
+ 23  transpose   V_3_cast_fp16                 ANE     CPU ··· ANE    0.19%
+ 24  matmul      attention_output_1_cast_fp16  ANE     CPU ··· ANE    0.55%
+ 25  transpose   var_96_cast_fp16              ANE     CPU ··· ANE    0.19%
+ 26  reshape     input_3_cast_fp16             ANE     CPU ··· ANE    0.11%
+ 27  linear      linear_3_cast_fp16            ANE     CPU ··· ANE    0.88%
+ 28  add         input_5_cast_fp16             ANE     CPU ··· ANE    0.30%
+ 29  layer_norm  input_7_cast_fp16             ANE     CPU ··· ANE    0.11%
+ 30  linear      linear_4_cast_fp16            ANE     CPU ··· ANE    0.10%
+ 31  relu        input_11_cast_fp16            ANE     CPU ··· ANE    0.32%
+ 32  linear      linear_5_cast_fp16            ANE     CPU ··· ANE   14.08%
+ 33  add         x_7_cast_fp16                 ANE     CPU ··· ANE    0.30%
+ 34  layer_norm  x_9_cast_fp16                 ANE     CPU ··· ANE    0.11%
+ 35  linear      linear_6_cast_fp16            ANE     CPU ··· ANE    0.88%
+ 36  linear      linear_7_cast_fp16            ANE     CPU ··· ANE    0.88%
+ 37  linear      linear_8_cast_fp16            ANE     CPU ··· ANE    0.88%
+ 38  reshape     var_158_cast_fp16             ANE     CPU ··· ANE    0.11%
+ 39  reshape     var_161_cast_fp16             ANE     CPU ··· ANE    0.11%
+ 40  reshape     var_164_cast_fp16             ANE     CPU ··· ANE    0.11%
+ 41  transpose   transpose_15                  ANE     CPU ··· ANE    0.19%
+ 42  transpose   transpose_14                  ANE     CPU ··· ANE    0.19%
+ 43  matmul      var_167_cast_fp16             ANE     CPU ··· ANE    0.55%
+ 44  mul         _inversed_attention_weights…  ANE     CPU ··· ANE    0.80%
+ 45  add         var_171_cast_fp16             ANE     CPU ··· ANE    1.50%
+ 46  softmax     attention_weights_7_cast_fp…  ANE     CPU ··· ANE    0.87%
+ 47  transpose   V_7_cast_fp16                 ANE     CPU ··· ANE    0.19%
+ 48  matmul      attention_output_3_cast_fp16  ANE     CPU ··· ANE    0.55%
+ 49  transpose   var_174_cast_fp16             ANE     CPU ··· ANE    0.19%
+ 50  reshape     input_13_cast_fp16            ANE     CPU ··· ANE    0.11%
+ 51  linear      linear_9_cast_fp16            ANE     CPU ··· ANE    0.88%
+ 52  add         input_15_cast_fp16            ANE     CPU ··· ANE    0.30%
+ 53  layer_norm  input_17_cast_fp16            ANE     CPU ··· ANE    0.11%
+ 54  linear      linear_10_cast_fp16           ANE     CPU ··· ANE    0.10%
+ 55  relu        input_21_cast_fp16            ANE     CPU ··· ANE    0.32%
+ 56  linear      linear_11_cast_fp16           ANE     CPU ··· ANE   14.08%
+ 57  add         x_11_cast_fp16                ANE     CPU ··· ANE    0.30%
+ 58  layer_norm  x_13_cast_fp16                ANE     CPU ··· ANE    0.11%
+ 59  linear      linear_12_cast_fp16           ANE     CPU ··· ANE    0.88%
+ 60  linear      linear_13_cast_fp16           ANE     CPU ··· ANE    0.88%
+ 61  linear      linear_14_cast_fp16           ANE     CPU ··· ANE    0.88%
+ 62  reshape     var_236_cast_fp16             ANE     CPU ··· ANE    0.11%
+ 63  reshape     var_239_cast_fp16             ANE     CPU ··· ANE    0.11%
+ 64  reshape     var_242_cast_fp16             ANE     CPU ··· ANE    0.11%
+ 65  transpose   transpose_17                  ANE     CPU ··· ANE    0.19%
+ 66  transpose   transpose_16                  ANE     CPU ··· ANE    0.19%
+ 67  matmul      var_245_cast_fp16             ANE     CPU ··· ANE    0.55%
+ 68  mul         _inversed_attention_weights…  ANE     CPU ··· ANE    0.80%
+ 69  add         var_249_cast_fp16             ANE     CPU ··· ANE    1.50%
+ 70  softmax     attention_weights_11_cast_f…  ANE     CPU ··· ANE    0.87%
+ 71  transpose   V_11_cast_fp16                ANE     CPU ··· ANE    0.19%
+ 72  matmul      attention_output_5_cast_fp16  ANE     CPU ··· ANE    0.55%
+ 73  transpose   var_252_cast_fp16             ANE     CPU ··· ANE    0.19%
+ 74  reshape     input_23_cast_fp16            ANE     CPU ··· ANE    0.11%
+ 75  linear      linear_15_cast_fp16           ANE     CPU ··· ANE    0.88%
+ 76  add         input_25_cast_fp16            ANE     CPU ··· ANE    0.30%
+ 77  layer_norm  input_27_cast_fp16            ANE     CPU ··· ANE    0.11%
+ 78  linear      linear_16_cast_fp16           ANE     CPU ··· ANE    0.10%
+ 79  relu        input_31_cast_fp16            ANE     CPU ··· ANE    0.32%
+ 80  linear      linear_17_cast_fp16           ANE     CPU ··· ANE   14.08%
+ 81  add         x_15_cast_fp16                ANE     CPU ··· ANE    0.30%
+ 82  layer_norm  x_cast_fp16                   ANE     CPU ··· ANE    0.11%
+ 83  linear      linear_18_cast_fp16           ANE     CPU ··· ANE    0.88%
+ 84  linear      linear_19_cast_fp16           ANE     CPU ··· ANE    0.88%
+ 85  linear      linear_20_cast_fp16           ANE     CPU ··· ANE    0.88%
+ 86  reshape     var_314_cast_fp16             ANE     CPU ··· ANE    0.11%
+ 87  reshape     var_317_cast_fp16             ANE     CPU ··· ANE    0.11%
+ 88  reshape     var_320_cast_fp16             ANE     CPU ··· ANE    0.11%
+ 89  transpose   transpose_19                  ANE     CPU ··· ANE    0.19%
+ 90  transpose   transpose_18                  ANE     CPU ··· ANE    0.19%
+ 91  matmul      var_323_cast_fp16             ANE     CPU ··· ANE    0.55%
+ 92  mul         _inversed_attention_weights…  ANE     CPU ··· ANE    0.80%
+ 93  add         var_327_cast_fp16             ANE     CPU ··· ANE    1.50%
+ 94  softmax     attention_weights_cast_fp16   ANE     CPU ··· ANE    0.87%
+ 95  transpose   V_cast_fp16                   ANE     CPU ··· ANE    0.19%
+ 96  matmul      attention_output_cast_fp16    ANE     CPU ··· ANE    0.55%
+ 97  transpose   var_330_cast_fp16             ANE     CPU ··· ANE    0.19%
+ 98  reshape     input_33_cast_fp16            ANE     CPU ··· ANE    0.11%
+ 99  linear      linear_21_cast_fp16           ANE     CPU ··· ANE    0.88%
+100  add         input_35_cast_fp16            ANE     CPU ··· ANE    0.30%
+101  layer_norm  input_37_cast_fp16            ANE     CPU ··· ANE    0.11%
+102  linear      linear_22_cast_fp16           ANE     CPU ··· ANE    0.10%
+103  relu        input_41_cast_fp16            ANE     CPU ··· ANE    0.32%
+104  linear      linear_23_cast_fp16           ANE     CPU ··· ANE   14.08%
+105  add         input_43_cast_fp16            ANE     CPU ··· ANE    0.30%
+106  layer_norm  input_cast_fp16               ANE     CPU ··· ANE    0.11%
+107  linear      linear_24_cast_fp16           ANE     CPU ··· ANE    0.88%
+108  cast        logits                        ANE     CPU ··· ANE    0.08%
 
 By device
 ═════════
 device  ops  cost share
 ──────  ───  ──────────
-ANE     116      95.76%
-CPU      13       4.24%
+ANE     100      98.60%
+CPU       9       1.40%
 
 By op type
 ══════════
-op          count  cost share  ran on   supported  
-──────────  ─────  ──────────  ───────  ───────────
-linear         25      69.11%  ANE      CPU ··· ANE
-add            13       8.41%  ANE      CPU ··· ANE
-matmul          8       4.22%  ANE      CPU ··· ANE
-softmax         4       3.37%  ANE      CPU ··· ANE
-mul             4       3.08%  ANE      CPU ··· ANE
-sub             4       3.02%  CPU      CPU ··· ···
-transpose      16       2.99%  ANE      CPU ··· ANE
-reshape        16       1.69%  ANE      CPU ··· ANE
-relu            4       1.23%  ANE      CPU ··· ANE
-band_part       4       1.01%  CPU      CPU ··· ···
-layer_norm      9       0.95%  ANE      CPU ··· ANE
-fill            4       0.42%  ANE      CPU ··· ANE
-gather          7       0.21%  ANE/CPU  CPU ··· ANE
-shape           5       0.21%  ANE/CPU  CPU ··· ANE
-cast            1       0.08%  ANE      CPU ··· ANE
-range_1d        1       0.00%  CPU      CPU ··· ···
-concat          4       0.00%  ANE      CPU ··· ANE
+op          count  cost share  ran on  supported  
+──────────  ─────  ──────────  ──────  ───────────
+linear         25      71.64%  ANE     CPU ··· ANE
+add            13       8.72%  ANE     CPU ··· ANE
+matmul          8       4.37%  ANE     CPU ··· ANE
+softmax         4       3.50%  ANE     CPU ··· ANE
+mul             4       3.19%  ANE     CPU ··· ANE
+transpose      16       3.09%  ANE     CPU ··· ANE
+reshape        16       1.75%  ANE     CPU ··· ANE
+relu            4       1.28%  ANE     CPU ··· ANE
+layer_norm      9       0.98%  ANE     CPU ··· ANE
+sub             1       0.78%  CPU     CPU ··· ···
+band_part       1       0.26%  CPU     CPU ··· ···
+gather          3       0.22%  CPU     CPU ··· ANE
+fill            1       0.13%  CPU     CPU ··· ANE
+cast            1       0.08%  ANE     CPU ··· ANE
+range_1d        1       0.00%  CPU     CPU ··· ···
+shape           1       0.00%  CPU     CPU ··· ANE
+concat          1       0.00%  CPU     CPU ··· ANE
 
 ANE-eligible but not on ANE
 ═══════════════════════════
-2 / 129 ops could run on ANE but were placed elsewhere (0.00% of cost)
-11 ops have no ANE support: band_part, gather, range_1d, sub
+4 / 109 ops could run on ANE but were placed elsewhere (0.13% of cost)
+5 ops have no ANE support: band_part, gather, range_1d, sub

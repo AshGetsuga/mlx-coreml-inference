@@ -26,7 +26,7 @@ class MultiHeadAttention(nn.Module):
         self.Wv = nn.Linear(in_features=self.d_model, out_features=self.d_model, bias=False)
         self.Wo = nn.Linear(in_features=self.d_model, out_features=self.d_model, bias=False)
 
-    def forward(self, x: torch.Tensor):
+    def forward(self, x: torch.Tensor, mask: torch.Tensor):
         B, N, k_dim = x.shape  # [B, N, D]
         assert k_dim == self.d_model, "Model and output Dims do not match"
 
@@ -40,10 +40,8 @@ class MultiHeadAttention(nn.Module):
         # Step 1: Attention weights → [B, H, N, N]
         attention_weights = (Q @ K.transpose(-2, -1)) / (self.d_head ** 0.5)
 
-        # Step 2: Causal mask + softmax
-        # Finite fill on purpose: CoreML builds this mask on device in fp16 and lowers triu to x - band_part(x),
-        # so -inf (or anything past fp16's ±65504) gives -inf - (-inf) = NaN. See experiments/mask_nan.
-        mask = torch.triu(torch.full((N, N), -1e4), diagonal=1).to(x.device)
+        # Step 2: Causal mask + softmax 
+        mask.to(x.device)
         attention_weights = torch.softmax(attention_weights + mask, dim=-1)
 
         # Step 3: Weighted values → [B, H, N, d_head]
@@ -88,13 +86,13 @@ class DecoderBlock(nn.Module):
         # Layer Norm 2
         self.ln2 = nn.LayerNorm(normalized_shape = d_model)
     
-    def forward(self, x):
+    def forward(self, x, mask):
         """
         """
         # Verify shape
         assert x.shape[-1] == self.d_model, "Input shape doesnt match Model"
 
-        x = x + self.attn(self.ln1(x)) # pre-norm -> attn -> residual
+        x = x + self.attn(self.ln1(x), mask) # pre-norm -> attn -> residual
 
         x = x + self.ffn(self.ln2(x)) # pre-norm -> ffn -> residual
 
@@ -121,12 +119,17 @@ class GPT(nn.Module):
     
     def forward(self, x):
         B, T = x.shape
+        # Positional Encoding
         positions = torch.arange(T, device=x.device)
+        # Creating deterministic masked attention mask
+        mask = torch.full((T, T), fill_value=-1e4)
+        mask = torch.triu(mask, diagonal = 1)
+
         x = self.tok_emb(x) + self.pos_emb(positions)
 
         # Forward Pass
         for block in self.blocks:
-            x = block(x)
+            x = block(x, mask)
         return self.head(self.ln_f(x))
 
         

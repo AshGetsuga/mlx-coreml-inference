@@ -1,6 +1,6 @@
 Model         : gpt_shakespeare
 Compute units : ALL
-Ops           : 129 compute  (+167 const, hidden)
+Ops           : 109 compute  (+140 const, hidden)
 Total cost    : 1.0000  (relative units; percentages below are of this total)
 
 Operations
@@ -10,162 +10,142 @@ Operations
   0  shape       var_15_shape                  GPU     CPU GPU ANE    0.00%
   1  gather      gather_0                      GPU     CPU GPU ANE    0.00%
   2  range_1d    input_1                       GPU     CPU GPU ···    0.00%
-  3  gather      var_26_cast_fp16              GPU     CPU GPU ···    0.11%
-  4  gather      var_30_cast_fp16              GPU     CPU GPU ···    0.42%
-  5  add         x_3_cast_fp16                 GPU     CPU GPU ANE    0.38%
-  6  layer_norm  x_5_cast_fp16                 GPU     CPU GPU ANE    0.29%
-  7  shape       var_60_shape_cast_fp16        GPU     CPU GPU ANE    0.14%
-  8  gather      gather_2                      GPU     CPU GPU ANE    0.00%
-  9  linear      linear_0_cast_fp16            GPU     CPU GPU ANE    0.06%
- 10  linear      linear_1_cast_fp16            GPU     CPU GPU ANE    0.06%
- 11  linear      linear_2_cast_fp16            GPU     CPU GPU ANE    0.06%
- 12  reshape     var_70_cast_fp16              GPU     CPU GPU ANE    0.29%
- 13  reshape     var_73_cast_fp16              GPU     CPU GPU ANE    0.29%
- 14  reshape     var_76_cast_fp16              GPU     CPU GPU ANE    0.29%
- 15  transpose   transpose_13                  GPU     CPU GPU ANE    2.52%
- 16  transpose   transpose_12                  GPU     CPU GPU ANE    2.52%
- 17  matmul      var_79_cast_fp16              GPU     CPU GPU ANE    1.44%
- 18  mul         _inversed_attention_weights…  GPU     CPU GPU ANE    0.84%
- 19  concat      concat_3                      GPU     CPU GPU ANE    0.00%
- 20  fill        var_83_cast_fp16              GPU     CPU GPU ANE    0.29%
- 21  band_part   band_part_0_cast_fp16         GPU     CPU GPU ···    0.58%
- 22  sub         sub_0_cast_fp16               GPU     CPU GPU ···    0.77%
- 23  add         var_86_cast_fp16              GPU     CPU GPU ANE    1.91%
- 24  softmax     attention_weights_3_cast_fp…  GPU     CPU GPU ANE    2.31%
- 25  transpose   V_3_cast_fp16                 GPU     CPU GPU ANE    2.52%
- 26  matmul      attention_output_1_cast_fp16  GPU     CPU GPU ANE    1.44%
- 27  transpose   var_89_cast_fp16              GPU     CPU GPU ANE    2.52%
- 28  reshape     input_3_cast_fp16             GPU     CPU GPU ANE    0.29%
- 29  linear      linear_3_cast_fp16            GPU     CPU GPU ANE    0.06%
- 30  add         input_5_cast_fp16             GPU     CPU GPU ANE    0.38%
- 31  layer_norm  input_7_cast_fp16             GPU     CPU GPU ANE    0.29%
- 32  linear      linear_4_cast_fp16            GPU     CPU GPU ANE    0.37%
- 33  relu        input_11_cast_fp16            GPU     CPU GPU ANE    0.84%
- 34  linear      linear_5_cast_fp16            GPU     CPU GPU ANE    0.89%
- 35  add         x_7_cast_fp16                 GPU     CPU GPU ANE    0.38%
- 36  layer_norm  x_9_cast_fp16                 GPU     CPU GPU ANE    0.29%
- 37  shape       var_136_shape_cast_fp16       GPU     CPU GPU ANE    0.14%
- 38  gather      gather_5                      GPU     CPU GPU ANE    0.00%
- 39  linear      linear_6_cast_fp16            GPU     CPU GPU ANE    0.06%
- 40  linear      linear_7_cast_fp16            GPU     CPU GPU ANE    0.06%
- 41  linear      linear_8_cast_fp16            GPU     CPU GPU ANE    0.06%
- 42  reshape     var_146_cast_fp16             GPU     CPU GPU ANE    0.29%
- 43  reshape     var_149_cast_fp16             GPU     CPU GPU ANE    0.29%
- 44  reshape     var_152_cast_fp16             GPU     CPU GPU ANE    0.29%
- 45  transpose   transpose_15                  GPU     CPU GPU ANE    2.52%
- 46  transpose   transpose_14                  GPU     CPU GPU ANE    2.52%
- 47  matmul      var_155_cast_fp16             GPU     CPU GPU ANE    1.44%
- 48  mul         _inversed_attention_weights…  GPU     CPU GPU ANE    0.84%
- 49  concat      concat_8                      GPU     CPU GPU ANE    0.00%
- 50  fill        var_159_cast_fp16             GPU     CPU GPU ANE    0.29%
- 51  band_part   band_part_1_cast_fp16         GPU     CPU GPU ···    0.58%
- 52  sub         sub_1_cast_fp16               GPU     CPU GPU ···    0.77%
- 53  add         var_162_cast_fp16             GPU     CPU GPU ANE    1.91%
- 54  softmax     attention_weights_7_cast_fp…  GPU     CPU GPU ANE    2.31%
- 55  transpose   V_7_cast_fp16                 GPU     CPU GPU ANE    2.52%
- 56  matmul      attention_output_3_cast_fp16  GPU     CPU GPU ANE    1.44%
- 57  transpose   var_165_cast_fp16             GPU     CPU GPU ANE    2.52%
- 58  reshape     input_13_cast_fp16            GPU     CPU GPU ANE    0.29%
- 59  linear      linear_9_cast_fp16            GPU     CPU GPU ANE    0.06%
- 60  add         input_15_cast_fp16            GPU     CPU GPU ANE    0.38%
- 61  layer_norm  input_17_cast_fp16            GPU     CPU GPU ANE    0.29%
- 62  linear      linear_10_cast_fp16           GPU     CPU GPU ANE    0.37%
- 63  relu        input_21_cast_fp16            GPU     CPU GPU ANE    0.84%
- 64  linear      linear_11_cast_fp16           GPU     CPU GPU ANE    0.89%
- 65  add         x_11_cast_fp16                GPU     CPU GPU ANE    0.38%
- 66  layer_norm  x_13_cast_fp16                GPU     CPU GPU ANE    0.29%
- 67  shape       var_212_shape_cast_fp16       GPU     CPU GPU ANE    0.14%
- 68  gather      gather_8                      GPU     CPU GPU ANE    0.00%
- 69  linear      linear_12_cast_fp16           GPU     CPU GPU ANE    0.06%
- 70  linear      linear_13_cast_fp16           GPU     CPU GPU ANE    0.06%
- 71  linear      linear_14_cast_fp16           GPU     CPU GPU ANE    0.06%
- 72  reshape     var_222_cast_fp16             GPU     CPU GPU ANE    0.29%
- 73  reshape     var_225_cast_fp16             GPU     CPU GPU ANE    0.29%
- 74  reshape     var_228_cast_fp16             GPU     CPU GPU ANE    0.29%
- 75  transpose   transpose_17                  GPU     CPU GPU ANE    2.52%
- 76  transpose   transpose_16                  GPU     CPU GPU ANE    2.52%
- 77  matmul      var_231_cast_fp16             GPU     CPU GPU ANE    1.44%
- 78  mul         _inversed_attention_weights…  GPU     CPU GPU ANE    0.84%
- 79  concat      concat_13                     GPU     CPU GPU ANE    0.00%
- 80  fill        var_235_cast_fp16             GPU     CPU GPU ANE    0.29%
- 81  band_part   band_part_2_cast_fp16         GPU     CPU GPU ···    0.58%
- 82  sub         sub_2_cast_fp16               GPU     CPU GPU ···    0.77%
- 83  add         var_238_cast_fp16             GPU     CPU GPU ANE    1.91%
- 84  softmax     attention_weights_11_cast_f…  GPU     CPU GPU ANE    2.31%
- 85  transpose   V_11_cast_fp16                GPU     CPU GPU ANE    2.52%
- 86  matmul      attention_output_5_cast_fp16  GPU     CPU GPU ANE    1.44%
- 87  transpose   var_241_cast_fp16             GPU     CPU GPU ANE    2.52%
- 88  reshape     input_23_cast_fp16            GPU     CPU GPU ANE    0.29%
- 89  linear      linear_15_cast_fp16           GPU     CPU GPU ANE    0.06%
- 90  add         input_25_cast_fp16            GPU     CPU GPU ANE    0.38%
- 91  layer_norm  input_27_cast_fp16            GPU     CPU GPU ANE    0.29%
- 92  linear      linear_16_cast_fp16           GPU     CPU GPU ANE    0.37%
- 93  relu        input_31_cast_fp16            GPU     CPU GPU ANE    0.84%
- 94  linear      linear_17_cast_fp16           GPU     CPU GPU ANE    0.89%
- 95  add         x_15_cast_fp16                GPU     CPU GPU ANE    0.38%
- 96  layer_norm  x_cast_fp16                   GPU     CPU GPU ANE    0.29%
- 97  shape       var_288_shape_cast_fp16       GPU     CPU GPU ANE    0.14%
- 98  gather      gather_11                     GPU     CPU GPU ANE    0.00%
- 99  linear      linear_18_cast_fp16           GPU     CPU GPU ANE    0.06%
-100  linear      linear_19_cast_fp16           GPU     CPU GPU ANE    0.06%
-101  linear      linear_20_cast_fp16           GPU     CPU GPU ANE    0.06%
-102  reshape     var_298_cast_fp16             GPU     CPU GPU ANE    0.29%
-103  reshape     var_301_cast_fp16             GPU     CPU GPU ANE    0.29%
-104  reshape     var_304_cast_fp16             GPU     CPU GPU ANE    0.29%
-105  transpose   transpose_19                  GPU     CPU GPU ANE    2.52%
-106  transpose   transpose_18                  GPU     CPU GPU ANE    2.52%
-107  matmul      var_307_cast_fp16             GPU     CPU GPU ANE    1.44%
-108  mul         _inversed_attention_weights…  GPU     CPU GPU ANE    0.84%
-109  concat      concat_18                     GPU     CPU GPU ANE    0.00%
-110  fill        var_311_cast_fp16             GPU     CPU GPU ANE    0.29%
-111  band_part   band_part_3_cast_fp16         GPU     CPU GPU ···    0.58%
-112  sub         sub_3_cast_fp16               GPU     CPU GPU ···    0.77%
-113  add         var_314_cast_fp16             GPU     CPU GPU ANE    1.91%
-114  softmax     attention_weights_cast_fp16   GPU     CPU GPU ANE    2.31%
-115  transpose   V_cast_fp16                   GPU     CPU GPU ANE    2.52%
-116  matmul      attention_output_cast_fp16    GPU     CPU GPU ANE    1.44%
-117  transpose   var_317_cast_fp16             GPU     CPU GPU ANE    2.52%
-118  reshape     input_33_cast_fp16            GPU     CPU GPU ANE    0.29%
-119  linear      linear_21_cast_fp16           GPU     CPU GPU ANE    0.06%
-120  add         input_35_cast_fp16            GPU     CPU GPU ANE    0.38%
-121  layer_norm  input_37_cast_fp16            GPU     CPU GPU ANE    0.29%
-122  linear      linear_22_cast_fp16           GPU     CPU GPU ANE    0.37%
-123  relu        input_41_cast_fp16            GPU     CPU GPU ANE    0.84%
-124  linear      linear_23_cast_fp16           GPU     CPU GPU ANE    0.89%
-125  add         input_43_cast_fp16            GPU     CPU GPU ANE    0.38%
-126  layer_norm  input_cast_fp16               GPU     CPU GPU ANE    0.29%
-127  linear      linear_24_cast_fp16           GPU     CPU GPU ANE    0.06%
-128  cast        logits                        GPU     CPU GPU ANE    0.22%
+  3  concat      concat_0                      GPU     CPU GPU ANE    0.00%
+  4  fill        mask_1_cast_fp16              GPU     CPU GPU ANE    0.31%
+  5  band_part   band_part_0_cast_fp16         GPU     CPU GPU ···    0.61%
+  6  sub         sub_0_cast_fp16               GPU     CPU GPU ···    0.81%
+  7  gather      var_37_cast_fp16              GPU     CPU GPU ···    0.12%
+  8  gather      var_41_cast_fp16              GPU     CPU GPU ···    0.45%
+  9  add         x_3_cast_fp16                 GPU     CPU GPU ANE    0.40%
+ 10  layer_norm  x_5_cast_fp16                 GPU     CPU GPU ANE    0.31%
+ 11  linear      linear_0_cast_fp16            GPU     CPU GPU ANE    0.06%
+ 12  linear      linear_1_cast_fp16            GPU     CPU GPU ANE    0.06%
+ 13  linear      linear_2_cast_fp16            GPU     CPU GPU ANE    0.06%
+ 14  reshape     var_80_cast_fp16              GPU     CPU GPU ANE    0.31%
+ 15  reshape     var_83_cast_fp16              GPU     CPU GPU ANE    0.31%
+ 16  reshape     var_86_cast_fp16              GPU     CPU GPU ANE    0.31%
+ 17  transpose   transpose_13                  GPU     CPU GPU ANE    2.66%
+ 18  transpose   transpose_12                  GPU     CPU GPU ANE    2.66%
+ 19  matmul      var_89_cast_fp16              GPU     CPU GPU ANE    1.53%
+ 20  mul         _inversed_attention_weights…  GPU     CPU GPU ANE    0.89%
+ 21  add         var_93_cast_fp16              GPU     CPU GPU ANE    2.02%
+ 22  softmax     attention_weights_3_cast_fp…  GPU     CPU GPU ANE    2.44%
+ 23  transpose   V_3_cast_fp16                 GPU     CPU GPU ANE    2.66%
+ 24  matmul      attention_output_1_cast_fp16  GPU     CPU GPU ANE    1.53%
+ 25  transpose   var_96_cast_fp16              GPU     CPU GPU ANE    2.66%
+ 26  reshape     input_3_cast_fp16             GPU     CPU GPU ANE    0.31%
+ 27  linear      linear_3_cast_fp16            GPU     CPU GPU ANE    0.06%
+ 28  add         input_5_cast_fp16             GPU     CPU GPU ANE    0.40%
+ 29  layer_norm  input_7_cast_fp16             GPU     CPU GPU ANE    0.31%
+ 30  linear      linear_4_cast_fp16            GPU     CPU GPU ANE    0.39%
+ 31  relu        input_11_cast_fp16            GPU     CPU GPU ANE    0.89%
+ 32  linear      linear_5_cast_fp16            GPU     CPU GPU ANE    0.94%
+ 33  add         x_7_cast_fp16                 GPU     CPU GPU ANE    0.40%
+ 34  layer_norm  x_9_cast_fp16                 GPU     CPU GPU ANE    0.31%
+ 35  linear      linear_6_cast_fp16            GPU     CPU GPU ANE    0.06%
+ 36  linear      linear_7_cast_fp16            GPU     CPU GPU ANE    0.06%
+ 37  linear      linear_8_cast_fp16            GPU     CPU GPU ANE    0.06%
+ 38  reshape     var_158_cast_fp16             GPU     CPU GPU ANE    0.31%
+ 39  reshape     var_161_cast_fp16             GPU     CPU GPU ANE    0.31%
+ 40  reshape     var_164_cast_fp16             GPU     CPU GPU ANE    0.31%
+ 41  transpose   transpose_15                  GPU     CPU GPU ANE    2.66%
+ 42  transpose   transpose_14                  GPU     CPU GPU ANE    2.66%
+ 43  matmul      var_167_cast_fp16             GPU     CPU GPU ANE    1.53%
+ 44  mul         _inversed_attention_weights…  GPU     CPU GPU ANE    0.89%
+ 45  add         var_171_cast_fp16             GPU     CPU GPU ANE    2.02%
+ 46  softmax     attention_weights_7_cast_fp…  GPU     CPU GPU ANE    2.44%
+ 47  transpose   V_7_cast_fp16                 GPU     CPU GPU ANE    2.66%
+ 48  matmul      attention_output_3_cast_fp16  GPU     CPU GPU ANE    1.53%
+ 49  transpose   var_174_cast_fp16             GPU     CPU GPU ANE    2.66%
+ 50  reshape     input_13_cast_fp16            GPU     CPU GPU ANE    0.31%
+ 51  linear      linear_9_cast_fp16            GPU     CPU GPU ANE    0.06%
+ 52  add         input_15_cast_fp16            GPU     CPU GPU ANE    0.40%
+ 53  layer_norm  input_17_cast_fp16            GPU     CPU GPU ANE    0.31%
+ 54  linear      linear_10_cast_fp16           GPU     CPU GPU ANE    0.39%
+ 55  relu        input_21_cast_fp16            GPU     CPU GPU ANE    0.89%
+ 56  linear      linear_11_cast_fp16           GPU     CPU GPU ANE    0.94%
+ 57  add         x_11_cast_fp16                GPU     CPU GPU ANE    0.40%
+ 58  layer_norm  x_13_cast_fp16                GPU     CPU GPU ANE    0.31%
+ 59  linear      linear_12_cast_fp16           GPU     CPU GPU ANE    0.06%
+ 60  linear      linear_13_cast_fp16           GPU     CPU GPU ANE    0.06%
+ 61  linear      linear_14_cast_fp16           GPU     CPU GPU ANE    0.06%
+ 62  reshape     var_236_cast_fp16             GPU     CPU GPU ANE    0.31%
+ 63  reshape     var_239_cast_fp16             GPU     CPU GPU ANE    0.31%
+ 64  reshape     var_242_cast_fp16             GPU     CPU GPU ANE    0.31%
+ 65  transpose   transpose_17                  GPU     CPU GPU ANE    2.66%
+ 66  transpose   transpose_16                  GPU     CPU GPU ANE    2.66%
+ 67  matmul      var_245_cast_fp16             GPU     CPU GPU ANE    1.53%
+ 68  mul         _inversed_attention_weights…  GPU     CPU GPU ANE    0.89%
+ 69  add         var_249_cast_fp16             GPU     CPU GPU ANE    2.02%
+ 70  softmax     attention_weights_11_cast_f…  GPU     CPU GPU ANE    2.44%
+ 71  transpose   V_11_cast_fp16                GPU     CPU GPU ANE    2.66%
+ 72  matmul      attention_output_5_cast_fp16  GPU     CPU GPU ANE    1.53%
+ 73  transpose   var_252_cast_fp16             GPU     CPU GPU ANE    2.66%
+ 74  reshape     input_23_cast_fp16            GPU     CPU GPU ANE    0.31%
+ 75  linear      linear_15_cast_fp16           GPU     CPU GPU ANE    0.06%
+ 76  add         input_25_cast_fp16            GPU     CPU GPU ANE    0.40%
+ 77  layer_norm  input_27_cast_fp16            GPU     CPU GPU ANE    0.31%
+ 78  linear      linear_16_cast_fp16           GPU     CPU GPU ANE    0.39%
+ 79  relu        input_31_cast_fp16            GPU     CPU GPU ANE    0.89%
+ 80  linear      linear_17_cast_fp16           GPU     CPU GPU ANE    0.94%
+ 81  add         x_15_cast_fp16                GPU     CPU GPU ANE    0.40%
+ 82  layer_norm  x_cast_fp16                   GPU     CPU GPU ANE    0.31%
+ 83  linear      linear_18_cast_fp16           GPU     CPU GPU ANE    0.06%
+ 84  linear      linear_19_cast_fp16           GPU     CPU GPU ANE    0.06%
+ 85  linear      linear_20_cast_fp16           GPU     CPU GPU ANE    0.06%
+ 86  reshape     var_314_cast_fp16             GPU     CPU GPU ANE    0.31%
+ 87  reshape     var_317_cast_fp16             GPU     CPU GPU ANE    0.31%
+ 88  reshape     var_320_cast_fp16             GPU     CPU GPU ANE    0.31%
+ 89  transpose   transpose_19                  GPU     CPU GPU ANE    2.66%
+ 90  transpose   transpose_18                  GPU     CPU GPU ANE    2.66%
+ 91  matmul      var_323_cast_fp16             GPU     CPU GPU ANE    1.53%
+ 92  mul         _inversed_attention_weights…  GPU     CPU GPU ANE    0.89%
+ 93  add         var_327_cast_fp16             GPU     CPU GPU ANE    2.02%
+ 94  softmax     attention_weights_cast_fp16   GPU     CPU GPU ANE    2.44%
+ 95  transpose   V_cast_fp16                   GPU     CPU GPU ANE    2.66%
+ 96  matmul      attention_output_cast_fp16    GPU     CPU GPU ANE    1.53%
+ 97  transpose   var_330_cast_fp16             GPU     CPU GPU ANE    2.66%
+ 98  reshape     input_33_cast_fp16            GPU     CPU GPU ANE    0.31%
+ 99  linear      linear_21_cast_fp16           GPU     CPU GPU ANE    0.06%
+100  add         input_35_cast_fp16            GPU     CPU GPU ANE    0.40%
+101  layer_norm  input_37_cast_fp16            GPU     CPU GPU ANE    0.31%
+102  linear      linear_22_cast_fp16           GPU     CPU GPU ANE    0.39%
+103  relu        input_41_cast_fp16            GPU     CPU GPU ANE    0.89%
+104  linear      linear_23_cast_fp16           GPU     CPU GPU ANE    0.94%
+105  add         input_43_cast_fp16            GPU     CPU GPU ANE    0.40%
+106  layer_norm  input_cast_fp16               GPU     CPU GPU ANE    0.31%
+107  linear      linear_24_cast_fp16           GPU     CPU GPU ANE    0.06%
+108  cast        logits                        GPU     CPU GPU ANE    0.23%
 
 By device
 ═════════
 device  ops  cost share
 ──────  ───  ──────────
-GPU     129     100.00%
+GPU     109     100.00%
 
 By op type
 ══════════
 op          count  cost share  ran on  supported  
 ──────────  ─────  ──────────  ──────  ───────────
-transpose      16      40.30%  GPU     CPU GPU ANE
-matmul          8      11.54%  GPU     CPU GPU ANE
-add            13      11.10%  GPU     CPU GPU ANE
-softmax         4       9.23%  GPU     CPU GPU ANE
-linear         25       6.01%  GPU     CPU GPU ANE
-reshape        16       4.62%  GPU     CPU GPU ANE
-mul             4       3.37%  GPU     CPU GPU ANE
-relu            4       3.37%  GPU     CPU GPU ANE
-sub             4       3.06%  GPU     CPU GPU ···
-layer_norm      9       2.60%  GPU     CPU GPU ANE
-band_part       4       2.31%  GPU     CPU GPU ···
-fill            4       1.15%  GPU     CPU GPU ANE
-shape           5       0.58%  GPU     CPU GPU ANE
-gather          7       0.54%  GPU     CPU GPU ANE
-cast            1       0.22%  GPU     CPU GPU ANE
+transpose      16      42.63%  GPU     CPU GPU ANE
+matmul          8      12.21%  GPU     CPU GPU ANE
+add            13      11.74%  GPU     CPU GPU ANE
+softmax         4       9.77%  GPU     CPU GPU ANE
+linear         25       6.36%  GPU     CPU GPU ANE
+reshape        16       4.88%  GPU     CPU GPU ANE
+mul             4       3.57%  GPU     CPU GPU ANE
+relu            4       3.57%  GPU     CPU GPU ANE
+layer_norm      9       2.75%  GPU     CPU GPU ANE
+sub             1       0.81%  GPU     CPU GPU ···
+band_part       1       0.61%  GPU     CPU GPU ···
+gather          3       0.57%  GPU     CPU GPU ANE
+fill            1       0.31%  GPU     CPU GPU ANE
+cast            1       0.23%  GPU     CPU GPU ANE
 range_1d        1       0.00%  GPU     CPU GPU ···
-concat          4       0.00%  GPU     CPU GPU ANE
+shape           1       0.00%  GPU     CPU GPU ANE
+concat          1       0.00%  GPU     CPU GPU ANE
 
 ANE-eligible but not on ANE
 ═══════════════════════════
-118 / 129 ops could run on ANE but were placed elsewhere (94.09% of cost)
-11 ops have no ANE support: band_part, gather, range_1d, sub
+104 / 109 ops could run on ANE but were placed elsewhere (98.01% of cost)
+5 ops have no ANE support: band_part, gather, range_1d, sub

@@ -23,6 +23,7 @@ def export(precision="fp16"):
     dummy = torch.zeros(1, config.CONTEXT_LEN, dtype=torch.long)
 
     with torch.no_grad():
+        _ = model(dummy)
         traced = torch.jit.trace(model, dummy)
 
     print("JIT trace complete.")
