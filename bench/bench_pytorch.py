@@ -1,4 +1,9 @@
-"""PyTorch forward-pass latency at full context. Run: python -m bench.bench_pytorch"""
+"""PyTorch forward-pass latency at full context.
+
+Run:      python -m bench.bench_pytorch [--precision full|half] [--device mps|cpu]
+Outputs:  results/bench_pytorch_<device>_<precision>.txt
+"""
+import argparse
 import time
 
 import numpy as np
@@ -9,8 +14,12 @@ from export.model_torch import GPT, load_mlx_weights
 
 WARMUP     = 10
 ITERATIONS = 100
-# Edit to compare devices: "mps" or "cpu" (CLI flags come in W3)
-DEVICE     = "mps" if torch.backends.mps.is_available() else "cpu"
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--precision", choices=["full", "half"], default="full", help="full = fp32, half = fp16")
+parser.add_argument("--device", choices=["mps", "cpu"], default="mps" if torch.backends.mps.is_available() else "cpu")
+args = parser.parse_args()
+PRECISION, DEVICE = args.precision, args.device
 
 
 def sync():
@@ -22,6 +31,8 @@ def sync():
 # ── Load model + weights ───────────────────────────────────────────────────────
 model = GPT()
 load_mlx_weights(model)
+if PRECISION == "half":
+    model = model.half() # Halfing precision
 model = model.to(DEVICE).eval()
 
 # ── Input: full context window of zeros (same as CoreML benchmark) ─────────────
@@ -43,8 +54,13 @@ with torch.no_grad():
         times.append((time.perf_counter() - t0) * 1000)
 
 times = np.array(times)
-print(f"\nPyTorch ({DEVICE.upper()})  —  input shape (1, {config.CONTEXT_LEN})  —  {ITERATIONS} iters")
-print(f"  Mean : {times.mean():.2f} ms")
-print(f"  Std  : {times.std():.2f} ms")
-print(f"  Min  : {times.min():.2f} ms")
-print(f"  Max  : {times.max():.2f} ms")
+text = (f"PyTorch ({DEVICE.upper()}, {PRECISION} precision)  —  input shape (1, {config.CONTEXT_LEN})  —  {ITERATIONS} iters\n"
+        f"  Mean : {times.mean():.2f} ms\n"
+        f"  Std  : {times.std():.2f} ms\n"
+        f"  Min  : {times.min():.2f} ms\n"
+        f"  Max  : {times.max():.2f} ms\n")
+print(f"\n{text}", end="")
+
+out_path = config.ROOT / "results" / f"bench_pytorch_{DEVICE}_{PRECISION}.txt"
+out_path.write_text(text)
+print(f"Saved → {out_path.relative_to(config.ROOT)}")

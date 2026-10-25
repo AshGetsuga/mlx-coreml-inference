@@ -1,0 +1,5 @@
+PyTorch (MPS, half precision)  —  input shape (1, 256)  —  100 iters
+  Mean : 2.11 ms
+  Std  : 0.68 ms
+  Min  : 1.42 ms
+  Max  : 5.52 ms

@@ -1,0 +1,16 @@
+Reference: PyTorch fp32 (CPU) · prompt 'ADAM: Good Day' · greedy decode to 256 tokens
+Logits: one forward pass on the same input (PyTorch's decoded sequence), last prompt position onward
+
+CoreML fp16 (CPU_AND_NE) vs PyTorch fp32
+  tokens : match  (242 generated tokens)
+  logits : 242 positions × 65 vocab, reference range [-11.16, 11.96]
+           max abs error 5.01e-02 · mean abs error 3.96e-03
+           allclose(atol=0.05): False · argmax agreement 100.0%
+           first out-of-tolerance value at position 164, vocab 63: reference 4.5423 vs CoreML 4.4922
+
+CoreML fp32 (ALL) vs PyTorch fp32
+  tokens : match  (242 generated tokens)
+  logits : 242 positions × 65 vocab, reference range [-11.16, 11.96]
+           max abs error 1.76e-05 · mean abs error 1.13e-06
+           allclose(atol=0.0001): True · argmax agreement 100.0%
+

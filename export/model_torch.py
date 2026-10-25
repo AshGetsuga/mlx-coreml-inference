@@ -122,7 +122,8 @@ class GPT(nn.Module):
         positions = torch.arange(T, device=x.device)
         # Creating deterministic masked attention mask
         mask = torch.full((T, T), fill_value=-1e4)
-        mask = torch.triu(mask, diagonal = 1).to(x.device)
+        # Match the weights' dtype: an fp32 mask would promote fp16 attention scores (and softmax) back to fp32
+        mask = torch.triu(mask, diagonal = 1).to(device=x.device, dtype=self.tok_emb.weight.dtype)
 
         x = self.tok_emb(x) + self.pos_emb(positions)
 

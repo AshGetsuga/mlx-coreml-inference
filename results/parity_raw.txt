@@ -1,0 +1,32 @@
+Prompt 'ADAM: Good Day' (14 tokens) · 242 generated tokens
+
+torch_fp32 vs torch_fp16
+  tokens : identical
+  logits : |diff| mean 2.411e-03 · std 2.462e-03
+           argmax identical at every position
+
+torch_fp32 vs coreml_fp32
+  tokens : identical
+  logits : |diff| mean 1.127e-06 · std 1.148e-06
+           argmax identical at every position
+
+torch_fp32 vs coreml_fp16
+  tokens : identical
+  logits : |diff| mean 3.963e-03 · std 3.930e-03
+           argmax identical at every position
+
+torch_fp16 vs coreml_fp32
+  tokens : identical
+  logits : |diff| mean 2.411e-03 · std 2.462e-03
+           argmax identical at every position
+
+torch_fp16 vs coreml_fp16
+  tokens : identical
+  logits : |diff| mean 4.229e-03 · std 4.621e-03
+           argmax identical at every position
+
+coreml_fp32 vs coreml_fp16
+  tokens : identical
+  logits : |diff| mean 3.963e-03 · std 3.930e-03
+           argmax identical at every position
+
