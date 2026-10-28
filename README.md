@@ -15,11 +15,11 @@ Train a small GPT in **MLX**, carry the weights through **PyTorch** into **CoreM
 | Model | Pre-norm decoder-only GPT · 4 layers · d_model 128 · 4 heads · context 256 · char vocab 65 · **840,704 params** |
 | Training (MLX, M4 Pro) | 5,000 steps, ~37 ms/step · **train loss 1.497 / val loss 1.696** ([log](results/shakespeare_train.txt)) |
 | Export parity | All four models (PyTorch / CoreML × fp32 / fp16) produce **identical greedy tokens over 242 generated tokens**; CoreML fp16 logit error is the same order of magnitude as PyTorch fp16's ([details](#parity-is-it-still-the-same-model)) |
-| Latency, full 256-token forward pass | **0.45 ms** on CoreML `CPU_AND_NE` (fp16), down from 0.89 ms after restructuring the mask ([details](#coreml-benchmarks-ml_bench)) |
+| Latency, full 256-token forward pass | **0.45 ms** on CoreML `CPU_AND_NE` (fp16), down from 0.89 ms after restructuring the mask ([details](#coreml-benchmarks-ml_bench)); PyTorch on the GPU (MPS) takes 1.70 ms (fp32) / 1.84 ms (fp16) |
 
 **Caveats, stated up front:**
 - Parity is one prompt, greedy decoding, and reports raw differences only (no pass/fail tolerances). Repeating it across several prompts is next.
-- PyTorch latency comes from a separate script and run (`bench/bench_pytorch.py`), not from `ML_Bench`, so compare it with the CoreML numbers loosely.
+- PyTorch latency comes from a separate script (`bench/bench_pytorch.py`), not from `ML_Bench`. It was run in the same session and under the same conditions, but treat cross-framework comparisons as approximate.
 
 ## Parity: is it still the same model?
 
@@ -57,14 +57,14 @@ Every CoreML compute unit at fp16 and fp32, plus the per-op device placement fro
 
 | compute units | fp16 mean | fp16 p50 | fp16 std | fp32 mean | fp32 p50 | fp32 std |
 |---|---|---|---|---|---|---|
-| `CPU_AND_NE` | **0.45** | **0.45** | 0.03 | — | — | — |
-| `CPU_ONLY` | 0.67 | 0.67 | 0.01 | 1.16 | 1.16 | 0.02 |
-| `CPU_AND_GPU` | 0.97 | 0.77 | 0.40 | 0.98 | 0.79 | 0.36 |
-| `ALL` | 0.96 | 0.77 | 0.41 | 0.88 | 0.86 | 0.10 |
+| `CPU_AND_NE` | **0.45** | **0.44** | 0.02 | — | — | — |
+| `CPU_ONLY` | 0.68 | 0.67 | 0.02 | 1.17 | 1.16 | 0.01 |
+| `CPU_AND_GPU` | 0.82 | 0.72 | 0.27 | 0.85 | 0.74 | 0.33 |
+| `ALL` | 0.83 | 0.86 | 0.11 | 0.86 | 0.88 | 0.11 |
 
 `CPU_AND_NE` is not run at fp32: the Neural Engine is fp16-only, so it would just fall back to the CPU.
 
-**Building the mask once halved Neural Engine latency.** `MLComputePlan` showed the ANE can run 98% of the model's estimated cost. The exceptions are the causal-mask ops (`band_part`, `sub`, `range_1d`), which run on the CPU. Before, every decoder block rebuilt its own mask, so execution switched devices 9 times per forward pass (CPU → ANE → CPU → …). Building the mask once in `GPT.forward` and passing it to every block leaves a single CPU segment at the start, then the whole model on the ANE.
+**Building the mask once halved Neural Engine latency.** `MLComputePlan` showed the ANE can run about 98.5% of the model's estimated cost. The rest is a short CPU segment: the causal-mask ops (`range_1d`, `band_part`, `sub`, which the ANE doesn't support), the shape and fill ops that feed them, and the two embedding lookups (`gather`). Before, every decoder block rebuilt its own mask, so execution switched devices 9 times per forward pass (CPU → ANE → CPU → …). Building the mask once in `GPT.forward` and passing it to every block leaves a single 9-op CPU segment at the start, then the whole model on the ANE.
 
 | fp16 `CPU_AND_NE` | device switches | mean | std |
 |---|---|---|---|
@@ -73,26 +73,28 @@ Every CoreML compute unit at fp16 and fp32, plus the per-op device placement fro
 
 Parity was re-checked after the change and still matches.
 
+**Xcode's performance report agrees.** It measured what actually ran rather than the plan: **CPU 9 · GPU 0 · Neural Engine 100** of 109 ops, the same 9 CPU ops `MLComputePlan` predicted, all before the first Neural Engine op. Median prediction under CPU and Neural Engine: **0.46 ms**, matching `ML_Bench`'s 0.45 ms, so the Python harness adds little to this number. The CPU segment's estimated time is only a few microseconds of the 450 µs: the earlier 9-switch version was slow because of the device handoffs, not the CPU work. Screenshots: [summary](ML_Bench/results/xcode/summary.png), [per-op placement](ML_Bench/results/xcode/ops_cpu_and_ne.png).
+
 **What the rest of the numbers say:**
 - **`ALL` is not the fastest choice.** Under `ALL`, CoreML places all 109 ops on the GPU, both before and after the mask change, even though the ANE is 2× faster here. Pick compute units explicitly and measure; don't rely on the default.
-- **Precision matters on the CPU, not on the GPU.** fp32 is 1.7× slower than fp16 on the CPU, but GPU latency is about the same at either precision (~0.8 ms p50). At this model size the GPU looks overhead-bound, not compute-bound. fp32 does just enough extra work per op for the GPU to beat the CPU; fp16 doesn't.
-- **The GPU has slow streaks.** The GPU configurations run ~0.77 ms at the median but have bursts of up to ~11 consecutive iterations above 1 ms, which drive their std to ~0.4. The bursts show up in every configuration that uses the GPU and vary from one run to the next (fp32 `CPU_AND_GPU` std was 0.10 in one run and 0.36 in another). They never appear on the CPU or ANE, which stay within ±0.03 ms. The cause is not yet confirmed (likely GPU clock or power-state changes; the GPU also drives the display).
-- **The ANE costs more to load:** ~440 ms to load and compile versus ~75 ms for the CPU. That's a one-time startup cost on device.
+- **Precision matters on the CPU, not on the GPU.** fp32 is 1.7× slower than fp16 on the CPU, but GPU latency is about the same at either precision (`CPU_AND_GPU` p50 0.72 vs 0.74 ms). At this model size the GPU looks overhead-bound, not compute-bound. fp32 does just enough extra work per op for the GPU to beat the CPU; fp16 doesn't.
+- **The GPU has slow streaks, and background load isn't the cause.** `CPU_AND_GPU` runs ~0.72 ms at the median but has bursts of consecutive iterations above 1 ms: 11 in a row at fp16, up to 10 in a row at fp32, with p99 around 2 ms. They persisted on an idle machine (see conditions), so other apps aren't causing them. Their size varies from run to run (fp16 `ALL` std was 0.41 in an earlier run and 0.11 in this one). They never appear on the CPU or ANE (`CPU_AND_NE` max 0.56 ms). The cause is not yet confirmed; GPU clock or power-state changes are the likely explanation (the GPU also drives the display).
+- **The ANE costs more to load:** ~440 ms to load and compile versus ~90 ms for the CPU. That's a one-time startup cost on device.
 
-**Conditions:** M4 Pro, macOS 26.6.2, coremltools 9.0. Timed with `time.perf_counter()` around Python `predict()`, so binding overhead is included. Power source and background load not yet recorded. Numbers vary by about ±0.05 ms between runs.
+**Conditions:** M4 Pro, macOS 26.6.2, coremltools 9.0. Mains power; all apps closed except the terminal and VS Code; CPU usage ~2% before the run (2026-10-28). Timed with `time.perf_counter()` around Python `predict()`, so binding overhead is included. CPU and ANE numbers repeat within ±0.02 ms across runs; GPU numbers vary more (see the slow streaks above).
 
 ## PyTorch benchmarks (`bench/bench_pytorch.py`)
 
-Same model and input `(1, 256)`, 100 timed iterations after 10 warmup, MPS synchronized before stopping the clock. Mean ± std, ms ([raw](results)):
+Same model and input `(1, 256)`, 100 timed iterations after 10 warmup, MPS synchronized before stopping the clock, same conditions as `ML_Bench`. Mean ± std, ms ([raw](results)):
 
 | device | fp32 | fp16 |
 |---|---|---|
-| CPU | 3.03 ± 0.20 | 14.05 ± 0.48 |
-| MPS | 1.98 ± 0.48 | 2.11 ± 0.68 |
+| CPU | 2.94 ± 0.14 | 13.66 ± 0.24 |
+| MPS | 1.70 ± 0.41 | 1.84 ± 0.39 |
 
 - **fp16 speed depends on the framework's kernels, not just the hardware.** On the same CPU, fp16 is 1.7× *faster* than fp32 in CoreML but 4.6× *slower* in PyTorch, which suggests PyTorch's CPU fp16 path isn't optimized for this chip.
-- **On the GPU, precision is within noise again** (1.98 vs 2.11 ms, std ~0.5–0.7), matching the CoreML GPU result.
-- These runs were not on an idle machine, so treat the gap to CoreML as indicative only.
+- **On the GPU, precision is within noise again** (1.70 vs 1.84 ms, std ~0.4), matching the CoreML GPU result.
+- **CoreML on the Neural Engine (0.45 ms) is ~3.8× faster than PyTorch on the GPU at fp32 (1.70 ms)** and ~4.1× faster than PyTorch at fp16 (1.84 ms).
 
 ## Hardware notes: what actually mattered
 
@@ -142,5 +144,7 @@ experiments/              side experiments: MLX vs PyTorch kernels, KV cache (WI
 - [x] fp16 vs fp32 latency across every CoreML compute unit
 - [ ] Add PyTorch CPU/MPS to the same benchmark at matched precision
 - [ ] Precompute the mask as a registered buffer: does removing the last CPU segment help?
-- [ ] Repeat runs with recorded conditions (power source, idle) to confirm the GPU slow streaks
+- [x] Cross-check placement and latency with Xcode's performance report ([results](#coreml-benchmarks-ml_bench))
+- [x] Repeat runs with recorded conditions (mains power, idle): the GPU slow streaks persist, so background load is ruled out
+- [ ] Find the cause of the GPU slow streaks (Instruments / Metal System Trace)
 - [ ] Scale up: a real small LLM (Qwen2.5-0.5B) on MLX and CoreML with stateful KV cache and int8/int4 quantization: tokens/sec, memory, perplexity
